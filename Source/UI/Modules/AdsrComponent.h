@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "AdsrGraphComponent.h"
+#include "UI/Components/AdsrGraphComponent.h"
 #include <JuceHeader.h>
 
 //==============================================================================

@@ -10,12 +10,12 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include "UI/AdsrComponent.h"
-#include "UI/OscComponent.h"
-#include "UI/HeaderComponent.h"
-#include "UI/FilterComponent.h"
-#include "UI/DistortionComponent.h"
-#include "UI/HalationLookAndFeel.h"
+#include "UI/Modules/AdsrComponent.h"
+#include "UI/Modules/OscComponent.h"
+#include "UI/Modules/HeaderComponent.h"
+#include "UI/Modules/FilterComponent.h"
+#include "UI/Modules/DistortionComponent.h"
+#include "UI/Appearance/HalationLookAndFeel.h"
 
 //==============================================================================
 /**

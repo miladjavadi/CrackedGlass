@@ -26,12 +26,6 @@
         <FILE id="T7yyF7" name="HalationLookAndFeel.h" compile="0" resource="0"
               file="Source/UI/Appearance/HalationLookAndFeel.h"/>
       </GROUP>
-      <GROUP id="{778EBBA6-7770-3338-449F-2F96AC3A370C}" name="Components">
-        <FILE id="PxhqL4" name="AdsrGraphComponent.cpp" compile="1" resource="0"
-              file="Source/UI/Components/AdsrGraphComponent.cpp"/>
-        <FILE id="GjCEzw" name="AdsrGraphComponent.h" compile="0" resource="0"
-              file="Source/UI/Components/AdsrGraphComponent.h"/>
-      </GROUP>
       <GROUP id="{9FA23F68-E496-4834-596E-970F2B375F67}" name="Fonts">
         <FILE id="hQIInW" name="QuanticoBold.ttf" compile="0" resource="1"
               file="Source/UI/Fonts/QuanticoBold.ttf"/>
