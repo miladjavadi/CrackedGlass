@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="jeLKR1" name="Halation" projectType="audioplug" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" version="0.1.0"
+              companyName="Milad Javadi" companyCopyright="Milad Javadi" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
+              pluginFormats="buildStandalone,buildVST3" pluginName="Halation"
+              pluginManufacturer="Milad Javadi" pluginManufacturerCode="MiJa"
+              pluginCode="Hala">
+  <MAINGROUP id="SR3Bqy" name="Halation">
+    <GROUP id="{D5CFC8CE-1DBA-AF6B-E9A9-1873F324332E}" name="Source">
+      <GROUP id="{2392070D-A1A2-24B5-61E8-8364944F973A}" name="Data">
+        <FILE id="QatQpb" name="AdsrData.cpp" compile="1" resource="0" file="Source/Data/AdsrData.cpp"/>
+        <FILE id="kiIM8i" name="AdsrData.h" compile="0" resource="0" file="Source/Data/AdsrData.h"/>
+        <FILE id="nG9Gfj" name="DistortionData.cpp" compile="1" resource="0"
+              file="Source/Data/DistortionData.cpp"/>
+        <FILE id="lqOHlr" name="DistortionData.h" compile="0" resource="0"
+              file="Source/Data/DistortionData.h"/>
+        <FILE id="Kzu1Nz" name="FilterData.cpp" compile="1" resource="0" file="Source/Data/FilterData.cpp"/>
+        <FILE id="nVXkej" name="FilterData.h" compile="0" resource="0" file="Source/Data/FilterData.h"/>
+        <FILE id="h4H5pi" name="OscData.cpp" compile="1" resource="0" file="Source/Data/OscData.cpp"/>
+        <FILE id="Ru5UL2" name="OscData.h" compile="0" resource="0" file="Source/Data/OscData.h"/>
+      </GROUP>
+      <GROUP id="{F2AB0939-AF5E-262D-F1E8-FA997406388F}" name="UI">
+        <FILE id="ac52sw" name="AdsrComponent.cpp" compile="1" resource="0"
+              file="Source/UI/AdsrComponent.cpp"/>
+        <FILE id="wiBzO3" name="AdsrComponent.h" compile="0" resource="0" file="Source/UI/AdsrComponent.h"/>
+        <FILE id="S2OpfV" name="AdsrGraphComponent.cpp" compile="1" resource="0"
+              file="Source/UI/AdsrGraphComponent.cpp"/>
+        <FILE id="CsQt3E" name="AdsrGraphComponent.h" compile="0" resource="0"
+              file="Source/UI/AdsrGraphComponent.h"/>
+        <FILE id="v24pOI" name="DistortionComponent.cpp" compile="1" resource="0"
+              file="Source/UI/DistortionComponent.cpp"/>
+        <FILE id="eTHSpR" name="DistortionComponent.h" compile="0" resource="0"
+              file="Source/UI/DistortionComponent.h"/>
+        <FILE id="p4xbMc" name="FilterComponent.cpp" compile="1" resource="0"
+              file="Source/UI/FilterComponent.cpp"/>
+        <FILE id="pFOyhw" name="FilterComponent.h" compile="0" resource="0"
+              file="Source/UI/FilterComponent.h"/>
+        <FILE id="rUNxkG" name="HalationLookAndFeel.cpp" compile="1" resource="0"
+              file="Source/UI/HalationLookAndFeel.cpp"/>
+        <FILE id="z0j1Xx" name="HalationLookAndFeel.h" compile="0" resource="0"
+              file="Source/UI/HalationLookAndFeel.h"/>
+        <FILE id="t34YYS" name="HeaderComponent.cpp" compile="1" resource="0"
+              file="Source/UI/HeaderComponent.cpp"/>
+        <FILE id="PcsCNY" name="HeaderComponent.h" compile="0" resource="0"
+              file="Source/UI/HeaderComponent.h"/>
+        <FILE id="idIibA" name="OscComponent.cpp" compile="1" resource="0"
+              file="Source/UI/OscComponent.cpp"/>
+        <FILE id="sDrtuA" name="OscComponent.h" compile="0" resource="0" file="Source/UI/OscComponent.h"/>
+        <FILE id="oNVQjN" name="QuanticoBold.ttf" compile="0" resource="1"
+              file="Source/UI/QuanticoBold.ttf"/>
+        <FILE id="XoI8Yd" name="QuanticoBoldItalic.ttf" compile="0" resource="1"
+              file="Source/UI/QuanticoBoldItalic.ttf"/>
+        <FILE id="CJjQz6" name="QuanticoItalic.ttf" compile="0" resource="1"
+              file="Source/UI/QuanticoItalic.ttf"/>
+        <FILE id="CI9RDM" name="QuanticoRegular.ttf" compile="0" resource="1"
+              file="Source/UI/QuanticoRegular.ttf"/>
+      </GROUP>
+      <FILE id="cTfzck" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="ECfZri" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="QwqLia" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="H9JfOK" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="f4NS42" name="SynthSound.h" compile="0" resource="0" file="Source/SynthSound.h"/>
+      <FILE id="JK2KKy" name="SynthVoice.cpp" compile="1" resource="0" file="Source/SynthVoice.cpp"/>
+      <FILE id="r8xQPx" name="SynthVoice.h" compile="0" resource="0" file="Source/SynthVoice.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors_headless" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <VS2026 targetFolder="Builds/VisualStudio2026">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="Halation"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="Halation"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors_headless" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_osc" path="../../../../../../JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2026>
+  </EXPORTFORMATS>
+</JUCERPROJECT>
