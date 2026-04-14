@@ -10,20 +10,20 @@
 
 #include "SynthVoice.h"
 
-bool SynthVoice::canPlaySound (juce::SynthesiserSound* sound)
+bool SynthVoice::canPlaySound(juce::SynthesiserSound* sound)
 {
     return dynamic_cast<juce::SynthesiserSound*>(sound) != nullptr;
 }
 
-void SynthVoice::startNote (int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition)
+void SynthVoice::startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition)
 {
-    osc.setPitchBend (currentPitchWheelPosition);
-    osc.setWaveFrequency (midiNoteNumber);
+    osc.setPitchBend(currentPitchWheelPosition);
+    osc.setWaveFrequency(midiNoteNumber);
     adsr.noteOn();
     modAdsr.noteOn();
 }
 
-void SynthVoice::stopNote (float velocity, bool allowTailOff)
+void SynthVoice::stopNote(float velocity, bool allowTailOff)
 {
     adsr.noteOff();
     modAdsr.noteOff();
@@ -32,43 +32,43 @@ void SynthVoice::stopNote (float velocity, bool allowTailOff)
         clearCurrentNote();
 }
 
-void SynthVoice::controllerMoved (int controllerNumber, int newControllerValue)
+void SynthVoice::controllerMoved(int controllerNumber, int newControllerValue)
 {
 
 }
 
-void SynthVoice::pitchWheelMoved (int newPitchWheelValue)
+void SynthVoice::pitchWheelMoved(int newPitchWheelValue)
 {
-    osc.setPitchBend (newPitchWheelValue);
+    osc.setPitchBend(newPitchWheelValue);
 }
 
-void SynthVoice::prepareToPlay (double sampleRate, int samplesPerBlock, int outputChannels)
+void SynthVoice::prepareToPlay(double sampleRate, int samplesPerBlock, int outputChannels)
 {
     juce::dsp::ProcessSpec spec;
     spec.maximumBlockSize = samplesPerBlock;
     spec.sampleRate = sampleRate;
     spec.numChannels = outputChannels;
     
-    osc.prepareToPlay (spec);
+    osc.prepareToPlay(spec);
 
-    adsr.setSampleRate (sampleRate);
+    adsr.setSampleRate(sampleRate);
 
-    filter.prepareToPlay (sampleRate, samplesPerBlock, outputChannels);
+    filter.prepareToPlay(sampleRate, samplesPerBlock, outputChannels);
 
     modAdsr.setSampleRate(sampleRate);
 
     cutoffFrequencyRamp.reset(samplesPerBlock, 0.01f);
 
-    gain.prepare (spec);
+    gain.prepare(spec);
 
     gain.setGainLinear(0.2f);
 
     isPrepared = true;
 }
 
-void SynthVoice::updateAdsr (const float attack, const float decay, const float sustain, const float release)
+void SynthVoice::updateAdsr(const float attack, const float decay, const float sustain, const float release)
 {
-    adsr.updateADSR (attack, decay, sustain, release);
+    adsr.updateADSR(attack, decay, sustain, release);
 }
 
 void SynthVoice::updateFilter(bool enable, juce::dsp::StateVariableTPTFilterType filterType, float cutoffFrequency, float resonance)
@@ -87,14 +87,14 @@ void SynthVoice::updateModAdsr(bool enable, float attack, float decay, float sus
     modAdsr.updateADSR(attack, decay, sustain, release);
 }
 
-void SynthVoice::renderNextBlock (juce::AudioBuffer<float>& outputBuffer, int startSample, int numSamples)
+void SynthVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int startSample, int numSamples)
 {
     jassert (isPrepared);
 
     if (!isVoiceActive())
         return;
 
-    synthBuffer.setSize (outputBuffer.getNumChannels(), numSamples, false, false, true);
+    synthBuffer.setSize(outputBuffer.getNumChannels(), numSamples, false, false, true);
     
     modAdsr.applyEnvelopeToBuffer(synthBuffer, 0, numSamples);
     
@@ -103,10 +103,10 @@ void SynthVoice::renderNextBlock (juce::AudioBuffer<float>& outputBuffer, int st
     juce::dsp::AudioBlock<float> audioBlock{ synthBuffer };
     osc.getNextAudioBlock (audioBlock);
 
-    adsr.applyEnvelopeToBuffer (synthBuffer, 0, numSamples);
+    adsr.applyEnvelopeToBuffer(synthBuffer, 0, numSamples);
 
     filter.process(synthBuffer);
-    gain.process (juce::dsp::ProcessContextReplacing<float> (audioBlock));
+    gain.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
 
     for (int i{ 0 }; i < outputBuffer.getNumChannels(); ++i)
     {

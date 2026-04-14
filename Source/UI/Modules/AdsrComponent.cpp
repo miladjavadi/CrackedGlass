@@ -62,12 +62,12 @@ AdsrComponent::~AdsrComponent()
 {
 }
 
-void AdsrComponent::paint (juce::Graphics& g)
+void AdsrComponent::paint(juce::Graphics& g)
 {
-    g.fillAll (backgroundColour);
+    g.fillAll(backgroundColour);
 
-    g.setColour (borderColour);
-    g.drawRect (getLocalBounds(), 2.0f);   // draw an outline around the component
+    g.setColour(borderColour);
+    g.drawRect(getLocalBounds(), 2.0f);
 
 }
 
@@ -85,17 +85,17 @@ void AdsrComponent::resized()
     const int sliderStartY{ bounds.getBottom() - rotorSize };
     constexpr int labelHeight{ 20 };
 
-    attackSlider.setBounds (sliderStartX, sliderStartY, rotorSize, rotorSize);
-    attackLabel.setBounds (attackSlider.getX(), attackSlider.getY() - labelHeight, rotorSize, labelHeight);
+    attackSlider.setBounds(sliderStartX, sliderStartY, rotorSize, rotorSize);
+    attackLabel.setBounds(attackSlider.getX(), attackSlider.getY() - labelHeight, rotorSize, labelHeight);
 
-    decaySlider.setBounds (attackSlider.getRight() + padding, sliderStartY, rotorSize, rotorSize);
-    decayLabel.setBounds (decaySlider.getX(), decaySlider.getY() - labelHeight, rotorSize, labelHeight);
+    decaySlider.setBounds(attackSlider.getRight() + padding, sliderStartY, rotorSize, rotorSize);
+    decayLabel.setBounds(decaySlider.getX(), decaySlider.getY() - labelHeight, rotorSize, labelHeight);
 
-    sustainSlider.setBounds (decaySlider.getRight() + padding, sliderStartY, rotorSize, rotorSize);
-    sustainLabel.setBounds (sustainSlider.getX(), sustainSlider.getY() - labelHeight, rotorSize, labelHeight);
+    sustainSlider.setBounds(decaySlider.getRight() + padding, sliderStartY, rotorSize, rotorSize);
+    sustainLabel.setBounds(sustainSlider.getX(), sustainSlider.getY() - labelHeight, rotorSize, labelHeight);
 
-    releaseSlider.setBounds (sustainSlider.getRight() + padding, sliderStartY, rotorSize, rotorSize);
-    releaseLabel.setBounds (releaseSlider.getX(), releaseSlider.getY() - labelHeight, rotorSize, labelHeight);
+    releaseSlider.setBounds(sustainSlider.getRight() + padding, sliderStartY, rotorSize, rotorSize);
+    releaseLabel.setBounds(releaseSlider.getX(), releaseSlider.getY() - labelHeight, rotorSize, labelHeight);
 
     if (m_canBeDisabled)
     {
@@ -108,15 +108,15 @@ void AdsrComponent::resized()
 
     const int graphWidth{ bounds.getWidth() - 2 * padding };
     const int graphHeight{ 70 };
-    adsrGraph.setBounds (bounds.getX() + padding, attackLabel.getY() - graphHeight - padding, graphWidth, graphHeight);
+    adsrGraph.setBounds(bounds.getX() + padding, attackLabel.getY() - graphHeight - padding, graphWidth, graphHeight);
 }
 
-void AdsrComponent::setSliderParams (juce::Slider& slider, bool useTextBox)
+void AdsrComponent::setSliderParams(juce::Slider& slider, bool useTextBox)
 {
-    slider.setSliderStyle (juce::Slider::SliderStyle::RotaryVerticalDrag);
+    slider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     if (useTextBox)
     {
-        slider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, 40, 20);
+        slider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 40, 20);
     }
     else
     {
@@ -131,14 +131,14 @@ void AdsrComponent::setSliderParams (juce::Slider& slider, bool useTextBox)
 
 void AdsrComponent::setLabelParams (juce::Label& label)
 {
-    label.setColour (juce::Label::ColourIds::textColourId, labelColour);
-    label.setFont (18.0f);
-    label.setJustificationType (juce::Justification::centred);
+    label.setColour(juce::Label::ColourIds::textColourId, labelColour);
+    label.setFont(18.0f);
+    label.setJustificationType(juce::Justification::centred);
     label.setText(label.getText().toUpperCase(), juce::dontSendNotification);
     addAndMakeVisible(label);
 }
 
-void AdsrComponent::setSliderWithLabel (juce::Slider& slider, juce::Label& label, std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& attachment, juce::AudioProcessorValueTreeState& apvts, juce::String paramID, bool useTextBox)
+void AdsrComponent::setSliderWithLabel(juce::Slider& slider, juce::Label& label, std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& attachment, juce::AudioProcessorValueTreeState& apvts, juce::String paramID, bool useTextBox)
 {
     setSliderParams(slider, useTextBox);
     attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, paramID, slider);

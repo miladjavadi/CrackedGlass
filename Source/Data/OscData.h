@@ -23,12 +23,12 @@ public:
         nWaveshapes,
     };
 
-    void prepareToPlay (juce::dsp::ProcessSpec& spec);
-    void setWaveshape (Waveshape selection);
-    void setWaveFrequency (int midiNoteNumber, bool updateLastMidiNote = true);
-    void getNextAudioBlock (juce::dsp::AudioBlock<float>& block);
-    void setLFOParams (float depth, float frequency);
-    void setTuningFactor (int coarse, int fine);
+    void prepareToPlay(juce::dsp::ProcessSpec& spec);
+    void setWaveshape(Waveshape selection);
+    void setWaveFrequency(int midiNoteNumber, bool updateLastMidiNote = true);
+    void getNextAudioBlock(juce::dsp::AudioBlock<float>& block);
+    void setLFOParams(float depth, float frequency);
+    void setTuningFactor(int coarse, int fine);
     void setPitchBend(int pitchWheelValue);
 
 private:
@@ -38,5 +38,5 @@ private:
     float fmDepth{ 0.0f };
     float tuningFactor{ 1.0f };
     float pitchBend{ 1.0f };
-    juce::Random whiteNoiseRandom;
+    juce::Random whiteRNG;
 };

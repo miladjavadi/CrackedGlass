@@ -25,7 +25,7 @@ public:
     void resized() override;
 
 private:
-    juce::Colour mainColour{ juce::Colours::blue };
+    juce::Colour mainColour{ juce::Colours::cadetblue };
     juce::Colour backgroundColour = mainColour.withAlpha(0.15f);
     juce::Colour labelColour = mainColour.withBrightness(1.0f).withSaturation(0.3f);
     juce::Colour borderColour = mainColour.withBrightness(1.0f).withSaturation(0.6f);
@@ -51,8 +51,8 @@ private:
 
     juce::Label coarsePitchLabel{ "Coarse", "Coarse" };
     juce::Label finePitchLabel{ "Fine", "Fine" };
-    juce::Label fmFrequencyLabel { "FM Frequency", "FM Frequency" };
-    juce::Label fmDepthLabel { "FM Depth", "FM Depth" };
+    juce::Label fmFrequencyLabel{ "FM Frequency", "FM Frequency" };
+    juce::Label fmDepthLabel{ "FM Depth", "FM Depth" };
 
     juce::Label waveshapeLabel{ "Shape", "Shape" };
 

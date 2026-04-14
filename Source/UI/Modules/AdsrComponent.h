@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "UI/Components/AdsrGraphComponent.h"
+#include "Components/AdsrGraphComponent.h"
 #include <JuceHeader.h>
 
 //==============================================================================
@@ -19,10 +19,10 @@
 class AdsrComponent  : public juce::Component
 {
 public:
-    AdsrComponent (const juce::String& name, juce::AudioProcessorValueTreeState& apvts, const juce::String& attackParameterID, const juce::String& decayParameterID, const juce::String& sustainParameterId, const juce::String& releaseParameterId, juce::Colour mainColour = juce::Colours::orange, bool canBeDisabled = false, const juce::String& enableParameterID = "");
+    AdsrComponent(const juce::String& name, juce::AudioProcessorValueTreeState& apvts, const juce::String& attackParameterID, const juce::String& decayParameterID, const juce::String& sustainParameterId, const juce::String& releaseParameterId, juce::Colour mainColour = juce::Colours::orange, bool canBeDisabled = false, const juce::String& enableParameterID = "");
     ~AdsrComponent() override;
 
-    void paint (juce::Graphics&) override;
+    void paint(juce::Graphics&) override;
     void resized() override;
 
 private:
