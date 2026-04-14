@@ -15,7 +15,7 @@
 #include <cmath>
 
 //==============================================================================
-HalationAudioProcessor::HalationAudioProcessor()
+CrackedGlassAudioProcessor::CrackedGlassAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
@@ -34,17 +34,17 @@ HalationAudioProcessor::HalationAudioProcessor()
     }
 }
 
-HalationAudioProcessor::~HalationAudioProcessor()
+CrackedGlassAudioProcessor::~CrackedGlassAudioProcessor()
 {
 }
 
 //==============================================================================
-const juce::String HalationAudioProcessor::getName() const
+const juce::String CrackedGlassAudioProcessor::getName() const
 {
     return JucePlugin_Name;
 }
 
-bool HalationAudioProcessor::acceptsMidi() const
+bool CrackedGlassAudioProcessor::acceptsMidi() const
 {
    #if JucePlugin_WantsMidiInput
     return true;
@@ -53,7 +53,7 @@ bool HalationAudioProcessor::acceptsMidi() const
    #endif
 }
 
-bool HalationAudioProcessor::producesMidi() const
+bool CrackedGlassAudioProcessor::producesMidi() const
 {
    #if JucePlugin_ProducesMidiOutput
     return true;
@@ -62,7 +62,7 @@ bool HalationAudioProcessor::producesMidi() const
    #endif
 }
 
-bool HalationAudioProcessor::isMidiEffect() const
+bool CrackedGlassAudioProcessor::isMidiEffect() const
 {
    #if JucePlugin_IsMidiEffect
     return true;
@@ -71,37 +71,37 @@ bool HalationAudioProcessor::isMidiEffect() const
    #endif
 }
 
-double HalationAudioProcessor::getTailLengthSeconds() const
+double CrackedGlassAudioProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
 
-int HalationAudioProcessor::getNumPrograms()
+int CrackedGlassAudioProcessor::getNumPrograms()
 {
     return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
                 // so this should be at least 1, even if you're not really implementing programs.
 }
 
-int HalationAudioProcessor::getCurrentProgram()
+int CrackedGlassAudioProcessor::getCurrentProgram()
 {
     return 0;
 }
 
-void HalationAudioProcessor::setCurrentProgram (int index)
+void CrackedGlassAudioProcessor::setCurrentProgram (int index)
 {
 }
 
-const juce::String HalationAudioProcessor::getProgramName (int index)
+const juce::String CrackedGlassAudioProcessor::getProgramName (int index)
 {
     return {};
 }
 
-void HalationAudioProcessor::changeProgramName (int index, const juce::String& newName)
+void CrackedGlassAudioProcessor::changeProgramName (int index, const juce::String& newName)
 {
 }
 
 //==============================================================================
-void HalationAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void CrackedGlassAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
@@ -126,14 +126,14 @@ void HalationAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
     dcBlocker.setType(juce::dsp::StateVariableTPTFilterType::highpass);
 }
 
-void HalationAudioProcessor::releaseResources()
+void CrackedGlassAudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool HalationAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+bool CrackedGlassAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
   #if JucePlugin_IsMidiEffect
     juce::ignoreUnused (layouts);
@@ -158,7 +158,7 @@ bool HalationAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts)
 }
 #endif
 
-void HalationAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+void CrackedGlassAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     //DBG("processBlock called with " << buffer.getNumSamples() << " samples");
 
@@ -253,18 +253,18 @@ void HalationAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 }
 
 //==============================================================================
-bool HalationAudioProcessor::hasEditor() const
+bool CrackedGlassAudioProcessor::hasEditor() const
 {
     return true; // (change this to false if you choose to not supply an editor)
 }
 
-juce::AudioProcessorEditor* HalationAudioProcessor::createEditor()
+juce::AudioProcessorEditor* CrackedGlassAudioProcessor::createEditor()
 {
-    return new HalationAudioProcessorEditor (*this);
+    return new CrackedGlassAudioProcessorEditor (*this);
 }
 
 //==============================================================================
-void HalationAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
+void CrackedGlassAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
@@ -275,7 +275,7 @@ void HalationAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
     copyXmlToBinary(*xml, destData);
 }
 
-void HalationAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void CrackedGlassAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
@@ -290,7 +290,7 @@ void HalationAudioProcessor::setStateInformation (const void* data, int sizeInBy
     }
 }
 
-juce::AudioProcessorValueTreeState::ParameterLayout HalationAudioProcessor::createParameters()
+juce::AudioProcessorValueTreeState::ParameterLayout CrackedGlassAudioProcessor::createParameters()
 {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> parameters;
 
@@ -328,18 +328,18 @@ juce::AudioProcessorValueTreeState::ParameterLayout HalationAudioProcessor::crea
 
     // distortion
     parameters.push_back (std::make_unique<juce::AudioParameterBool> ("DISTORTIONENABLE", "Enable Distortion", false));
-    parameters.push_back (std::make_unique<juce::AudioParameterChoice> ("DISTORTIONFUNCTION", "Distortion Function", juce::StringArray{ "TANH", "HARD CLIP", "DISSOLVE", "FOLD" }, static_cast<int>(DistortionData::Function::tanh)));
+    parameters.push_back (std::make_unique<juce::AudioParameterChoice> ("DISTORTIONFUNCTION", "Distortion Function", juce::StringArray{ "TANH", "HARD CLIP", "CRACK", "SHATTER" }, static_cast<int>(DistortionData::Function::tanh)));
     parameters.push_back (std::make_unique<juce::AudioParameterFloat> ("DISTORTIONDRIVE", "Distortion Drive", juce::NormalisableRange<float>{ 0.0f, 10.0f }, 0.0f));
 
     return { parameters.begin(), parameters.end() };
 }
 
-void HalationAudioProcessor::setGain(float value)
+void CrackedGlassAudioProcessor::setGain(float value)
 {
     gain = value;
 }
 
-const juce::AudioProcessorValueTreeState& HalationAudioProcessor::getAPVTS() const
+const juce::AudioProcessorValueTreeState& CrackedGlassAudioProcessor::getAPVTS() const
 {
     return apvts;
 }
@@ -348,7 +348,7 @@ const juce::AudioProcessorValueTreeState& HalationAudioProcessor::getAPVTS() con
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new HalationAudioProcessor();
+    return new CrackedGlassAudioProcessor();
 }
 
 // Value Tree

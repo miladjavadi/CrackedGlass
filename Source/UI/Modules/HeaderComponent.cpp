@@ -55,7 +55,7 @@ void HeaderComponent::paint (juce::Graphics& g)
 
     g.setColour (borderColour);
     g.setFont (juce::Font (juce::Font::getDefaultSansSerifFontName(), 26.0f, 1));
-    g.drawText (juce::String("Halation").toUpperCase(), juce::Rectangle<int>{10, 0, getLocalBounds().getWidth() - 10, getLocalBounds().getHeight() },
+    g.drawText (juce::String("CrackedGlass").toUpperCase(), juce::Rectangle<int>{20, 0, getLocalBounds().getWidth() - 10, getLocalBounds().getHeight() },
                 juce::Justification::left, true);   // draw some placeholder text
 }
 

@@ -1,78 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="jeLKR1" name="Halation" projectType="audioplug" useAppConfig="0"
+<JUCERPROJECT id="jeLKR1" name="CrackedGlass" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" version="0.1.0"
               companyName="Milad Javadi" companyCopyright="Milad Javadi" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
-              pluginFormats="buildStandalone,buildVST3" pluginName="Halation"
+              pluginFormats="buildStandalone,buildVST3" pluginName="CrackedGlass"
               pluginManufacturer="Milad Javadi" pluginManufacturerCode="MiJa"
-              pluginCode="Hala">
-  <MAINGROUP id="SR3Bqy" name="Halation">
+              pluginCode="CrGl" companyWebsite="www.github.com/miladjavadi">
+  <MAINGROUP id="SR3Bqy" name="CrackedGlass">
     <GROUP id="{E0FAE559-08D0-E794-D06C-F2570474B8CD}" name="Data">
-      <FILE id="fvp10Y" name="AdsrData.cpp" compile="1" resource="0" file="Source/Data/AdsrData.cpp"/>
-      <FILE id="SrtXhn" name="AdsrData.h" compile="0" resource="0" file="Source/Data/AdsrData.h"/>
-      <FILE id="bgxQfB" name="DistortionData.cpp" compile="1" resource="0"
+      <FILE id="EOCUy3" name="AdsrData.cpp" compile="1" resource="0" file="Source/Data/AdsrData.cpp"/>
+      <FILE id="EeG8t9" name="AdsrData.h" compile="0" resource="0" file="Source/Data/AdsrData.h"/>
+      <FILE id="ZryfyW" name="DistortionData.cpp" compile="1" resource="0"
             file="Source/Data/DistortionData.cpp"/>
-      <FILE id="QMgPuN" name="DistortionData.h" compile="0" resource="0"
+      <FILE id="Iu40sS" name="DistortionData.h" compile="0" resource="0"
             file="Source/Data/DistortionData.h"/>
-      <FILE id="tSnwWz" name="FilterData.cpp" compile="1" resource="0" file="Source/Data/FilterData.cpp"/>
-      <FILE id="bFMNBL" name="FilterData.h" compile="0" resource="0" file="Source/Data/FilterData.h"/>
-      <FILE id="lLpDUG" name="OscData.cpp" compile="1" resource="0" file="Source/Data/OscData.cpp"/>
-      <FILE id="QA9qba" name="OscData.h" compile="0" resource="0" file="Source/Data/OscData.h"/>
+      <FILE id="VJY0Br" name="FilterData.cpp" compile="1" resource="0" file="Source/Data/FilterData.cpp"/>
+      <FILE id="UfJ6qd" name="FilterData.h" compile="0" resource="0" file="Source/Data/FilterData.h"/>
+      <FILE id="qzUWxW" name="OscData.cpp" compile="1" resource="0" file="Source/Data/OscData.cpp"/>
+      <FILE id="WWt9DC" name="OscData.h" compile="0" resource="0" file="Source/Data/OscData.h"/>
     </GROUP>
     <GROUP id="{88009621-7409-5D44-AC80-A4DBE8307CCA}" name="UI">
       <GROUP id="{338512EE-F006-D5A8-D535-20B7936F1CC2}" name="Appearance">
-        <FILE id="w3es8p" name="HalationLookAndFeel.cpp" compile="1" resource="0"
-              file="Source/UI/Appearance/HalationLookAndFeel.cpp"/>
-        <FILE id="T7yyF7" name="HalationLookAndFeel.h" compile="0" resource="0"
-              file="Source/UI/Appearance/HalationLookAndFeel.h"/>
+        <FILE id="zZMWf0" name="CrackedGlassLookAndFeel.cpp" compile="1" resource="0"
+              file="Source/UI/Appearance/CrackedGlassLookAndFeel.cpp"/>
+        <FILE id="SnljMF" name="CrackedGlassLookAndFeel.h" compile="0" resource="0"
+              file="Source/UI/Appearance/CrackedGlassLookAndFeel.h"/>
       </GROUP>
-      <GROUP id="{9FA23F68-E496-4834-596E-970F2B375F67}" name="Fonts">
-        <FILE id="hQIInW" name="QuanticoBold.ttf" compile="0" resource="1"
+      <GROUP id="{DF4A1E97-74F7-EE4B-E697-C529773B2D75}" name="Fonts">
+        <FILE id="swfxcS" name="QuanticoBold.ttf" compile="0" resource="1"
               file="Source/UI/Fonts/QuanticoBold.ttf"/>
-        <FILE id="tXjwTR" name="QuanticoBoldItalic.ttf" compile="0" resource="1"
+        <FILE id="sHbWia" name="QuanticoBoldItalic.ttf" compile="0" resource="1"
               file="Source/UI/Fonts/QuanticoBoldItalic.ttf"/>
-        <FILE id="QFpB2q" name="QuanticoItalic.ttf" compile="0" resource="1"
+        <FILE id="WW3xDI" name="QuanticoItalic.ttf" compile="0" resource="1"
               file="Source/UI/Fonts/QuanticoItalic.ttf"/>
-        <FILE id="cgI3e1" name="QuanticoRegular.ttf" compile="0" resource="1"
+        <FILE id="iT5C2r" name="QuanticoRegular.ttf" compile="0" resource="1"
               file="Source/UI/Fonts/QuanticoRegular.ttf"/>
       </GROUP>
-      <GROUP id="{1A87B29F-2A8E-9859-8A57-6AF1E730D01B}" name="Modules">
-        <GROUP id="{4E679F01-35BC-53D7-1D8B-0EDA7E30B99F}" name="Components">
-          <FILE id="bWaml4" name="AdsrGraphComponent.cpp" compile="1" resource="0"
+      <GROUP id="{091C960A-5E44-9183-9244-51296445FC5E}" name="Modules">
+        <GROUP id="{E8520412-F08D-727F-F401-11EE800D6B11}" name="Components">
+          <FILE id="dHkkr6" name="AdsrGraphComponent.cpp" compile="1" resource="0"
                 file="Source/UI/Modules/Components/AdsrGraphComponent.cpp"/>
-          <FILE id="xyRe5B" name="AdsrGraphComponent.h" compile="0" resource="0"
+          <FILE id="p8Ga8C" name="AdsrGraphComponent.h" compile="0" resource="0"
                 file="Source/UI/Modules/Components/AdsrGraphComponent.h"/>
         </GROUP>
-        <FILE id="sSbKLJ" name="AdsrComponent.cpp" compile="1" resource="0"
+        <FILE id="wqnLXn" name="AdsrComponent.cpp" compile="1" resource="0"
               file="Source/UI/Modules/AdsrComponent.cpp"/>
-        <FILE id="Lhf5AD" name="AdsrComponent.h" compile="0" resource="0" file="Source/UI/Modules/AdsrComponent.h"/>
-        <FILE id="Ay3sfL" name="DistortionComponent.cpp" compile="1" resource="0"
+        <FILE id="JXdopc" name="AdsrComponent.h" compile="0" resource="0" file="Source/UI/Modules/AdsrComponent.h"/>
+        <FILE id="Mm1QkJ" name="DistortionComponent.cpp" compile="1" resource="0"
               file="Source/UI/Modules/DistortionComponent.cpp"/>
-        <FILE id="DP37py" name="DistortionComponent.h" compile="0" resource="0"
+        <FILE id="HXnmz9" name="DistortionComponent.h" compile="0" resource="0"
               file="Source/UI/Modules/DistortionComponent.h"/>
-        <FILE id="OnwGbN" name="FilterComponent.cpp" compile="1" resource="0"
+        <FILE id="ysjrzZ" name="FilterComponent.cpp" compile="1" resource="0"
               file="Source/UI/Modules/FilterComponent.cpp"/>
-        <FILE id="Y7lal5" name="FilterComponent.h" compile="0" resource="0"
+        <FILE id="RxK641" name="FilterComponent.h" compile="0" resource="0"
               file="Source/UI/Modules/FilterComponent.h"/>
-        <FILE id="xMn8fc" name="HeaderComponent.cpp" compile="1" resource="0"
+        <FILE id="LaQsAs" name="HeaderComponent.cpp" compile="1" resource="0"
               file="Source/UI/Modules/HeaderComponent.cpp"/>
-        <FILE id="yF7tPo" name="HeaderComponent.h" compile="0" resource="0"
+        <FILE id="nSUd0O" name="HeaderComponent.h" compile="0" resource="0"
               file="Source/UI/Modules/HeaderComponent.h"/>
-        <FILE id="lDkyFw" name="OscComponent.cpp" compile="1" resource="0"
+        <FILE id="DW7Btl" name="OscComponent.cpp" compile="1" resource="0"
               file="Source/UI/Modules/OscComponent.cpp"/>
-        <FILE id="pAHOSo" name="OscComponent.h" compile="0" resource="0" file="Source/UI/Modules/OscComponent.h"/>
+        <FILE id="D7l9l3" name="OscComponent.h" compile="0" resource="0" file="Source/UI/Modules/OscComponent.h"/>
       </GROUP>
     </GROUP>
-    <FILE id="KAtKq1" name="PluginEditor.cpp" compile="1" resource="0"
+    <FILE id="K3VVZ0" name="PluginEditor.cpp" compile="1" resource="0"
           file="Source/PluginEditor.cpp"/>
-    <FILE id="wE0Hit" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
-    <FILE id="KIE6lh" name="PluginProcessor.cpp" compile="1" resource="0"
+    <FILE id="aEiG25" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    <FILE id="tPODTl" name="PluginProcessor.cpp" compile="1" resource="0"
           file="Source/PluginProcessor.cpp"/>
-    <FILE id="dQawgA" name="PluginProcessor.h" compile="0" resource="0"
+    <FILE id="yFT6Co" name="PluginProcessor.h" compile="0" resource="0"
           file="Source/PluginProcessor.h"/>
-    <FILE id="sWa50C" name="SynthSound.h" compile="0" resource="0" file="Source/SynthSound.h"/>
-    <FILE id="AiCyHa" name="SynthVoice.cpp" compile="1" resource="0" file="Source/SynthVoice.cpp"/>
-    <FILE id="f3P0JC" name="SynthVoice.h" compile="0" resource="0" file="Source/SynthVoice.h"/>
+    <FILE id="gONQjN" name="SynthSound.h" compile="0" resource="0" file="Source/SynthSound.h"/>
+    <FILE id="gfgjwG" name="SynthVoice.cpp" compile="1" resource="0" file="Source/SynthVoice.cpp"/>
+    <FILE id="XYyAPX" name="SynthVoice.h" compile="0" resource="0" file="Source/SynthVoice.h"/>
   </MAINGROUP>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>

@@ -15,16 +15,16 @@
 #include "UI/Modules/HeaderComponent.h"
 #include "UI/Modules/FilterComponent.h"
 #include "UI/Modules/DistortionComponent.h"
-#include "UI/Appearance/HalationLookAndFeel.h"
+#include "UI/Appearance/CrackedGlassLookAndFeel.h"
 
 //==============================================================================
 /**
 */
-class HalationAudioProcessorEditor  : public juce::AudioProcessorEditor
+class CrackedGlassAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
-    HalationAudioProcessorEditor (HalationAudioProcessor&);
-    ~HalationAudioProcessorEditor() override;
+    CrackedGlassAudioProcessorEditor (CrackedGlassAudioProcessor&);
+    ~CrackedGlassAudioProcessorEditor() override;
 
     //==============================================================================
     void paint (juce::Graphics&) override;
@@ -53,8 +53,8 @@ private:
     static constexpr int componentWidth{ (windowWidth - 2 * marginSides - (numberOfColumns - 1) * padding) / numberOfColumns };
     static constexpr int componentHeight{ (windowHeight - marginTop - marginBottom - headerHeight - (numberOfRows - 1) * padding) / numberOfRows };
 
-    HalationAudioProcessor& audioProcessor;
-    std::unique_ptr<HalationLookAndFeel> halationLookAndFeel;
+    CrackedGlassAudioProcessor& audioProcessor;
+    std::unique_ptr<CrackedGlassLookAndFeel> crackedGlassLookAndFeel;
 
     HeaderComponent header;
     OscComponent osc;
@@ -63,5 +63,5 @@ private:
     AdsrComponent modAdsr;
     DistortionComponent distortion;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HalationAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CrackedGlassAudioProcessorEditor)
 };

@@ -28,9 +28,9 @@ void DistortionData::process(juce::AudioBuffer<float>& buffer)
 
     if (isEnabled)
     {
-        if (distortion.functionToUse == dissolvePlaceholder)
+        if (distortion.functionToUse == crackPlaceholder)
         {
-            dissolveBuffer(buffer, gain);
+            crackBuffer(buffer, gain);
         }
 
         else
@@ -60,11 +60,11 @@ void DistortionData::updateParameters(bool enable, float newDrive, Function func
     case Function::hardClip:
         distortion.functionToUse = [](float x) { return std::clamp(x, -1.0f, 1.0f); };
         break;
-    case Function::dissolve:
-        distortion.functionToUse = dissolvePlaceholder;
+    case Function::crack:
+        distortion.functionToUse = crackPlaceholder;
         break;
-    case Function::fold:
-        distortion.functionToUse = [](float x) { return (x < -1.0f || x > 1.0f) ? (std::clamp(x, -1.0f, 1.0f) - x + (std::signbit(x) ? 1 : -1)) : x; };
+    case Function::shatter:
+        distortion.functionToUse = [](float x) { return (x < -1.0f || x > 1.0f) ? (std::clamp(x, -1.0f, 1.0f) - x + (std::signbit(x) ? 1 : -1)) : x; }; // wavefold
     default:
         jassert(false);
         break;
@@ -76,7 +76,8 @@ void DistortionData::reset()
     distortion.reset();
 }
 
-void DistortionData::dissolveBuffer(juce::AudioBuffer<float>& buffer, float gain)
+// this was originally going to be a bitcrush effect
+void DistortionData::crackBuffer(juce::AudioBuffer<float>& buffer, float gain)
 {
     for (int channel{ 0 }; channel < buffer.getNumChannels(); ++channel)
     {

@@ -10,7 +10,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-HalationAudioProcessorEditor::HalationAudioProcessorEditor (HalationAudioProcessor& p)
+CrackedGlassAudioProcessorEditor::CrackedGlassAudioProcessorEditor (CrackedGlassAudioProcessor& p)
     : AudioProcessorEditor (&p)
     , audioProcessor (p)
     , osc (audioProcessor.apvts, juce::String{ "OSC1WAVESHAPE" })
@@ -23,8 +23,8 @@ HalationAudioProcessorEditor::HalationAudioProcessorEditor (HalationAudioProcess
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
 
-    halationLookAndFeel = std::make_unique<HalationLookAndFeel>();
-    setLookAndFeel(halationLookAndFeel.get());
+    crackedGlassLookAndFeel = std::make_unique<CrackedGlassLookAndFeel>();
+    setLookAndFeel(crackedGlassLookAndFeel.get());
 
     setSize (windowWidth, windowHeight);
     //setResizable(true, true);
@@ -37,19 +37,19 @@ HalationAudioProcessorEditor::HalationAudioProcessorEditor (HalationAudioProcess
     addAndMakeVisible(distortion);
 }
 
-HalationAudioProcessorEditor::~HalationAudioProcessorEditor()
+CrackedGlassAudioProcessorEditor::~CrackedGlassAudioProcessorEditor()
 {
     setLookAndFeel(nullptr);
 }
 
 //==============================================================================
-void HalationAudioProcessorEditor::paint (juce::Graphics& g)
+void CrackedGlassAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (static_cast<juce::Colour>(0xff010114));
 }
 
-void HalationAudioProcessorEditor::resized()
+void CrackedGlassAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
@@ -64,7 +64,7 @@ void HalationAudioProcessorEditor::resized()
     distortion.setBounds (getCellBounds(1, 3, 1, 1));
 }
 
-juce::Rectangle<int> HalationAudioProcessorEditor::getCellBounds(int row, int column, int componentRows, int componentColumns)
+juce::Rectangle<int> CrackedGlassAudioProcessorEditor::getCellBounds(int row, int column, int componentRows, int componentColumns)
 {
     jassert(row < numberOfRows && column < numberOfColumns);
 

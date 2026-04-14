@@ -20,8 +20,8 @@ public:
     {
         tanh,
         hardClip,
-        dissolve,
-        fold,
+        crack,
+        shatter,
         numFunctions,
     };
 
@@ -37,7 +37,7 @@ private:
     //        return static_cast<float>(static_cast<int>(x * 10.0f / gain) * gain);
     //    }
     //};
-    float (*dissolvePlaceholder)(float) { [] (float x) { return 0.0f; } };
+    float (*crackPlaceholder)(float) { [] (float x) { return 0.0f; } };
 
     float oldGain{ 1.0f };
     float gain{ 1.0f };
@@ -45,5 +45,5 @@ private:
     bool isPrepared{ false };
     bool isEnabled{ false };
 
-    void dissolveBuffer(juce::AudioBuffer<float>& buffer, float drive);
+    void crackBuffer(juce::AudioBuffer<float>& buffer, float drive);
 };

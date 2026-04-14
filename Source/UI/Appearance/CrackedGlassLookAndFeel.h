@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    HalationLookAndFeel.h
+    CrackedGlassLookAndFeel.h
     Created: 13 Apr 2026 8:13:55pm
     Author:  milad
 
@@ -12,10 +12,10 @@
 
 #include <JuceHeader.h>
 
-class HalationLookAndFeel : public juce::LookAndFeel_V4
+class CrackedGlassLookAndFeel : public juce::LookAndFeel_V4
 {
 public:
-    HalationLookAndFeel()
+    CrackedGlassLookAndFeel()
         : LookAndFeel_V4{}
     {
 
@@ -24,7 +24,7 @@ public:
         juce::LookAndFeel::setDefaultLookAndFeel(this);
     }
 
-    ~HalationLookAndFeel()
+    ~CrackedGlassLookAndFeel()
     {
         juce::LookAndFeel::setDefaultLookAndFeel(nullptr);
     }

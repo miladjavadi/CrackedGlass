@@ -1,17 +1,17 @@
 /*
   ==============================================================================
 
-    HalationLookAndFeel.cpp
+    CrackedGlassLookAndFeel.cpp
     Created: 13 Apr 2026 8:13:55pm
     Author:  milad
 
   ==============================================================================
 */
 
-#include "HalationLookAndFeel.h"
+#include "CrackedGlassLookAndFeel.h"
 #include <cmath>
 
-void HalationLookAndFeel::drawButtonBackground(juce::Graphics& g,
+void CrackedGlassLookAndFeel::drawButtonBackground(juce::Graphics& g,
     juce::Button& button,
     const juce::Colour& backgroundColour,
     bool shouldDrawButtonAsHighlighted,
@@ -43,7 +43,7 @@ void HalationLookAndFeel::drawButtonBackground(juce::Graphics& g,
     g.fillRect (fillBounds);
 }
 
-void HalationLookAndFeel::drawButtonText(juce::Graphics& g,
+void CrackedGlassLookAndFeel::drawButtonText(juce::Graphics& g,
     juce::TextButton& button,
     bool shouldDrawButtonAsHighlighted,
     bool shouldDrawButtonAsDown)
@@ -65,7 +65,7 @@ void HalationLookAndFeel::drawButtonText(juce::Graphics& g,
     g.drawText(button.getButtonText().toUpperCase(), fillBounds, juce::Justification::centred);
 }
 
-void HalationLookAndFeel::drawRotarySlider(juce::Graphics& g,
+void CrackedGlassLookAndFeel::drawRotarySlider(juce::Graphics& g,
     int x,
     int y,
     int width,
@@ -129,7 +129,7 @@ void HalationLookAndFeel::drawRotarySlider(juce::Graphics& g,
     }
 }
 
-void HalationLookAndFeel::drawLinearSlider(juce::Graphics& g,
+void CrackedGlassLookAndFeel::drawLinearSlider(juce::Graphics& g,
     int x,
     int y,
     int width,

@@ -18,12 +18,12 @@
 //==============================================================================
 /**
 */
-class HalationAudioProcessor  : public juce::AudioProcessor
+class CrackedGlassAudioProcessor  : public juce::AudioProcessor
 {
 public:
     //==============================================================================
-    HalationAudioProcessor();
-    ~HalationAudioProcessor() override;
+    CrackedGlassAudioProcessor();
+    ~CrackedGlassAudioProcessor() override;
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -76,5 +76,5 @@ private:
     float lastGain{ 0.0f };
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HalationAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CrackedGlassAudioProcessor)
 };
