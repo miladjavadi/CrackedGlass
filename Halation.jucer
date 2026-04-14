@@ -37,6 +37,12 @@
               file="Source/UI/Fonts/QuanticoRegular.ttf"/>
       </GROUP>
       <GROUP id="{1A87B29F-2A8E-9859-8A57-6AF1E730D01B}" name="Modules">
+        <GROUP id="{4E679F01-35BC-53D7-1D8B-0EDA7E30B99F}" name="Components">
+          <FILE id="bWaml4" name="AdsrGraphComponent.cpp" compile="1" resource="0"
+                file="Source/UI/Modules/Components/AdsrGraphComponent.cpp"/>
+          <FILE id="xyRe5B" name="AdsrGraphComponent.h" compile="0" resource="0"
+                file="Source/UI/Modules/Components/AdsrGraphComponent.h"/>
+        </GROUP>
         <FILE id="sSbKLJ" name="AdsrComponent.cpp" compile="1" resource="0"
               file="Source/UI/Modules/AdsrComponent.cpp"/>
         <FILE id="Lhf5AD" name="AdsrComponent.h" compile="0" resource="0" file="Source/UI/Modules/AdsrComponent.h"/>
