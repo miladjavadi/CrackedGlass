@@ -1,2 +1,2 @@
 # CrackedGlass
-![Plugin Screenshot](Images/halation_screenshot.png)
+![Plugin Screenshot](Images/crackedglass_screenshot.png)
