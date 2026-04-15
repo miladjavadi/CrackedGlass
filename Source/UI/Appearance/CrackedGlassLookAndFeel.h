@@ -60,16 +60,30 @@ public:
         float maxSliderPos,
         const juce::Slider::SliderStyle style,
         juce::Slider& slider) override;
+    
+    juce::Typeface::Ptr getTypefaceForFont(const juce::Font& font) override;
 
     static const juce::Typeface::Ptr getCustomRegularFont()
     {
-        static auto typeface = juce::Typeface::createSystemTypefaceFor(BinaryData::QuanticoRegular_ttf, BinaryData::QuanticoRegular_ttfSize);
+        static auto typeface = juce::Typeface::createSystemTypefaceFor(BinaryData::QuanticoItalic_ttf, BinaryData::QuanticoItalic_ttfSize);
         return juce::Typeface::Ptr(typeface);
     }
 
     static const juce::Typeface::Ptr getCustomBoldFont()
     {
-        static auto typeface = juce::Typeface::createSystemTypefaceFor(BinaryData::QuanticoBold_ttf, BinaryData::QuanticoBold_ttfSize);
+        static auto typeface = juce::Typeface::createSystemTypefaceFor(BinaryData::QuanticoBoldItalic_ttf, BinaryData::QuanticoBold_ttfSize);
+        return juce::Typeface::Ptr(typeface);
+    }
+
+    static const juce::Typeface::Ptr getCustomItalicFont()
+    {
+        static auto typeface = juce::Typeface::createSystemTypefaceFor(BinaryData::QuanticoItalic_ttf, BinaryData::QuanticoItalic_ttfSize);
+        return juce::Typeface::Ptr(typeface);
+    }
+
+    static const juce::Typeface::Ptr getCustomBoldItalicFont()
+    {
+        static auto typeface = juce::Typeface::createSystemTypefaceFor(BinaryData::QuanticoBoldItalic_ttf, BinaryData::QuanticoBoldItalic_ttfSize);
         return juce::Typeface::Ptr(typeface);
     }
 

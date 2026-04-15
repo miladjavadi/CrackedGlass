@@ -59,9 +59,7 @@ void CrackedGlassLookAndFeel::drawButtonText(juce::Graphics& g,
     {
         g.setColour(button.findColour(juce::TextButton::textColourOnId));
     }
-
-    g.setFont(getCustomBoldFont());
-    g.setFont(20.0f);
+    g.setFont(juce::Font(20.0f, 3));
     g.drawText(button.getButtonText().toUpperCase(), fillBounds, juce::Justification::centred);
 }
 
@@ -185,5 +183,27 @@ void CrackedGlassLookAndFeel::drawLinearSlider(juce::Graphics& g,
         valueTrack.lineTo (maxPoint);
         g.setColour (slider.findColour (juce::Slider::trackColourId));
         g.strokePath (valueTrack, { trackWidth, juce::PathStrokeType::curved, juce::PathStrokeType::square });
+    }
+}
+
+juce::Typeface::Ptr CrackedGlassLookAndFeel::getTypefaceForFont(const juce::Font& font)
+{
+    int styleFlags{ font.getStyleFlags() };
+
+    if (styleFlags & juce::Font::bold)
+    {
+        if (styleFlags & juce::Font::italic)
+        {
+            return getCustomBoldItalicFont();
+        }
+        return getCustomBoldFont();
+    }
+    else if (styleFlags & juce::Font::italic)
+    {
+        return getCustomItalicFont();
+    }
+    else
+    {
+        return getCustomRegularFont();
     }
 }

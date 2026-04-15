@@ -21,6 +21,7 @@ void SynthVoice::startNote(int midiNoteNumber, float velocity, juce::Synthesiser
     osc.setWaveFrequency(midiNoteNumber);
     adsr.noteOn();
     modAdsr.noteOn();
+    isFirstBlock = true;
 }
 
 void SynthVoice::stopNote(float velocity, bool allowTailOff)
@@ -108,11 +109,24 @@ void SynthVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int sta
     filter.process(synthBuffer);
     gain.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
 
+    if (isFirstBlock)
+    {
+        synthBuffer.applyGainRamp(startSample, numSamples, 0.0f, 1.0f);
+        isFirstBlock = false;
+    }
+
+    if (!adsr.isActive() && !modAdsr.isActive())
+    {
+        synthBuffer.applyGainRamp(startSample, numSamples, 1.0f, 0.0f);
+    }
+
     for (int i{ 0 }; i < outputBuffer.getNumChannels(); ++i)
     {
         outputBuffer.addFrom(i, startSample, synthBuffer, i, 0, numSamples);
+    }
 
-        if (!adsr.isActive() && !modAdsr.isActive())
-            clearCurrentNote();
+    if (!adsr.isActive() && !modAdsr.isActive())
+    {
+        clearCurrentNote();
     }
 }

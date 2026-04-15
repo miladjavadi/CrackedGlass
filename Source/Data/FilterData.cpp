@@ -39,6 +39,7 @@ void FilterData::updateParameters(bool enable, juce::dsp::StateVariableTPTFilter
     isEnabled = enable;
     filter.setType(filterType);
 
+    //float modulatedCutoffFrequency{ filterType == juce::dsp::StateVariableTPTFilterType::highpass ? std::fmin(std::fmax(20'000.0f - (20'000.0f - cutoffFrequency) * modulator , 1.0f), 20'000.0f) : std::fmin(std::fmax(cutoffFrequency * modulator, 1.0f), 20'000.0f)};
     float modulatedCutoffFrequency{ std::fmin(std::fmax(cutoffFrequency * modulator, 1.0f), 20'000.0f) };
 
     filter.setCutoffFrequency(modulatedCutoffFrequency);

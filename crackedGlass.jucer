@@ -61,6 +61,8 @@
         <FILE id="DW7Btl" name="OscComponent.cpp" compile="1" resource="0"
               file="Source/UI/Modules/OscComponent.cpp"/>
         <FILE id="D7l9l3" name="OscComponent.h" compile="0" resource="0" file="Source/UI/Modules/OscComponent.h"/>
+        <FILE id="RaCIIK" name="SynthModule.cpp" compile="1" resource="0" file="Source/UI/Modules/SynthModule.cpp"/>
+        <FILE id="xZKjgL" name="SynthModule.h" compile="0" resource="0" file="Source/UI/Modules/SynthModule.h"/>
       </GROUP>
     </GROUP>
     <FILE id="K3VVZ0" name="PluginEditor.cpp" compile="1" resource="0"

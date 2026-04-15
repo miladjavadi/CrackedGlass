@@ -34,7 +34,7 @@ OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, const juce
     titleLabel.setText(juce::String("Oscillator").toUpperCase(), juce::NotificationType::dontSendNotification);
     titleLabel.setColour(juce::Label::ColourIds::backgroundColourId, borderColour);
     titleLabel.setColour(juce::Label::ColourIds::textColourId, titleColour);
-    titleLabel.setFont(juce::Font(juce::Font::getDefaultSansSerifFontName(), 22.0f, 1));
+    titleLabel.setFont(juce::Font(22.0f, 3));
     titleLabel.setJustificationType(juce::Justification::centred);
     addAndMakeVisible(titleLabel);
 

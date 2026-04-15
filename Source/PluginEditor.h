@@ -29,7 +29,7 @@ public:
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
-    juce::Rectangle<int> getCellBounds(int row, int column, int componentRows=1, int componentColumns=1);
+    //juce::Rectangle<int> getCellBounds(int row, int column, int componentRows=1, int componentColumns=1);
 
 private:
     // This reference is provided as a quick way for your editor to
@@ -48,10 +48,10 @@ private:
     static constexpr int padding{ 10 };
 
     static constexpr int headerWidth{ windowWidth };
-    static constexpr int headerHeight{ 60 };
+    static constexpr float headerHeightRatio{ 1.0f/11.0f };
 
-    static constexpr int componentWidth{ (windowWidth - 2 * marginSides - (numberOfColumns - 1) * padding) / numberOfColumns };
-    static constexpr int componentHeight{ (windowHeight - marginTop - marginBottom - headerHeight - (numberOfRows - 1) * padding) / numberOfRows };
+    //static constexpr int componentWidth{ (windowWidth - 2 * marginSides - (numberOfColumns - 1) * padding) / numberOfColumns };
+    //static constexpr int componentHeight{ (windowHeight - marginTop - marginBottom - headerHeight - (numberOfRows - 1) * padding) / numberOfRows };
 
     CrackedGlassAudioProcessor& audioProcessor;
     std::unique_ptr<CrackedGlassLookAndFeel> crackedGlassLookAndFeel;

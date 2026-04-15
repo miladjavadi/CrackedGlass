@@ -48,15 +48,15 @@ void HeaderComponent::paint (juce::Graphics& g)
        drawing code..
     */
 
-    g.fillAll (backgroundColour);   // clear the background
+    //g.fillAll (backgroundColour);   // clear the background
 
     g.setColour (borderColour);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
+    //g.fillRect(getLocalBounds().getX(), getLocalBounds().getBottom() - 2, getLocalBounds().getWidth(), 2);   // draw an outline around the component
 
     g.setColour (borderColour);
     g.setFont (juce::Font (juce::Font::getDefaultSansSerifFontName(), 26.0f, 1));
     g.drawText (juce::String("CrackedGlass").toUpperCase(), juce::Rectangle<int>{20, 0, getLocalBounds().getWidth() - 10, getLocalBounds().getHeight() },
-                juce::Justification::left, true);   // draw some placeholder text
+                juce::Justification::left, true);
 }
 
 void HeaderComponent::resized()
@@ -64,6 +64,6 @@ void HeaderComponent::resized()
     // This method is where you should set the bounds of any child
     // components that your component contains..
 
-    gainSlider.setBounds(getLocalBounds().getWidth() - 180, 0, 150, 60);
-    gainLabel.setBounds(gainSlider.getX() - 65, gainSlider.getY(), 60, 60);
+    gainSlider.setBounds(getLocalBounds().getWidth() - 180, 0, 150, getLocalBounds().getHeight());
+    gainLabel.setBounds(gainSlider.getX() - 65, gainSlider.getY(), 60, getLocalBounds().getHeight());
 }

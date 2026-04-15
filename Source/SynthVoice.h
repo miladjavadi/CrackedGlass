@@ -46,4 +46,5 @@ private:
     bool modAdsrIsEnabled{ false };
     juce::dsp::Gain<float> gain;
     bool isPrepared{ false };
+    bool isFirstBlock{ true };
 };
