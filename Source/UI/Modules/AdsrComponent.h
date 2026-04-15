@@ -12,6 +12,7 @@
 
 #include "Components/AdsrGraphComponent.h"
 #include <JuceHeader.h>
+#include "Components/RadioButton.h"
 
 //==============================================================================
 /*

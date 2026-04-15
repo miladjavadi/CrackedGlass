@@ -42,6 +42,12 @@
                 file="Source/UI/Modules/Components/AdsrGraphComponent.cpp"/>
           <FILE id="p8Ga8C" name="AdsrGraphComponent.h" compile="0" resource="0"
                 file="Source/UI/Modules/Components/AdsrGraphComponent.h"/>
+          <FILE id="TlGOaE" name="RadioButton.cpp" compile="1" resource="0" file="Source/UI/Modules/Components/RadioButton.cpp"/>
+          <FILE id="q5cTgR" name="RadioButton.h" compile="0" resource="0" file="Source/UI/Modules/Components/RadioButton.h"/>
+          <FILE id="LYkUds" name="RadioButtonGroup.cpp" compile="1" resource="0"
+                file="Source/UI/Modules/Components/RadioButtonGroup.cpp"/>
+          <FILE id="z1a4IM" name="RadioButtonGroup.h" compile="0" resource="0"
+                file="Source/UI/Modules/Components/RadioButtonGroup.h"/>
         </GROUP>
         <FILE id="wqnLXn" name="AdsrComponent.cpp" compile="1" resource="0"
               file="Source/UI/Modules/AdsrComponent.cpp"/>
