@@ -13,18 +13,10 @@
 
 //==============================================================================
 OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, const juce::String& waveshapeSelectorID)
+    : waveshapeSelector{ apvts, waveshapeSelectorID, juce::FlexBox::Direction::row, backgroundColour, borderColour, borderColour, titleColour, borderColour }
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
     const juce::StringArray& waveshapeOptions = (dynamic_cast<juce::AudioParameterChoice*>(apvts.getParameter(waveshapeSelectorID)))->choices;
-    oscWaveshapeSelector.addItemList(waveshapeOptions, 1);
 
-    oscWaveshapeSelector.setColour(juce::ComboBox::ColourIds::backgroundColourId, deadColour);
-    oscWaveshapeSelector.setColour(juce::ComboBox::ColourIds::textColourId, labelColour);
-    oscWaveshapeSelector.setColour(juce::ComboBox::ColourIds::arrowColourId, borderColour);
-    oscWaveshapeSelector.setColour(juce::ComboBox::ColourIds::outlineColourId, borderColour);
-    addAndMakeVisible(oscWaveshapeSelector);
-    oscWaveshapeSelectorAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(apvts, waveshapeSelectorID, oscWaveshapeSelector);
     
     setSliderWithLabel(coarsePitchSlider, coarsePitchLabel, coarsePitchSliderAttachment, apvts, "OSC1COARSEPITCH");
     setSliderWithLabel(finePitchSlider, finePitchLabel, finePitchSliderAttachment, apvts, "OSC1FINEPITCH");
@@ -38,7 +30,7 @@ OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, const juce
     titleLabel.setJustificationType(juce::Justification::centred);
     addAndMakeVisible(titleLabel);
 
-    //setLabelParams(waveshapeLabel);
+    addAndMakeVisible(waveshapeSelector);
 }
 
 OscComponent::~OscComponent()
@@ -86,9 +78,12 @@ void OscComponent::resized()
 
     lfoFrequencySlider.setBounds (lfoDepthSlider.getRight() + padding, lfoDepthSlider.getY(), rotorSize, rotorSize);
     fmFrequencyLabel.setBounds (lfoFrequencySlider.getX(), lfoFrequencySlider.getY() - labelHeight, rotorSize, labelHeight);
-
-    oscWaveshapeSelector.setBounds (coarsePitchSlider.getX(), coarsePitchLabel.getY() - labelHeight - padding, rotorSize, labelHeight);
-    waveshapeLabel.setBounds (coarsePitchSlider.getX(), oscWaveshapeSelector.getY(), rotorSize, labelHeight);
+    
+    juce::Rectangle<int> selectorBounds{ getLocalBounds() };
+    selectorBounds.reduce(selectorBounds.getWidth() / 6, 0);
+    selectorBounds.setY(coarsePitchLabel.getY() - labelHeight - padding - margin - 5);
+    selectorBounds.setHeight(labelHeight + 5);
+    waveshapeSelector.setBounds(selectorBounds);
 
     titleLabel.setBounds(0, 0, 140, 30);
 }

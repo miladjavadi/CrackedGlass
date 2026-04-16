@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include "Components/RadioButtonGroup.h"
 #include <JuceHeader.h>
 
 //==============================================================================
@@ -35,14 +36,16 @@ private:
 
     juce::Label titleLabel;
 
-    juce::ComboBox oscWaveshapeSelector;
+    //juce::ComboBox oscWaveshapeSelector;
 
     juce::Slider coarsePitchSlider;
     juce::Slider finePitchSlider;
     juce::Slider lfoFrequencySlider;
     juce::Slider lfoDepthSlider;
 
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> oscWaveshapeSelectorAttachment;
+    //std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> oscWaveshapeSelectorAttachment;
+
+    RadioButtonGroup waveshapeSelector;
 
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> coarsePitchSliderAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> finePitchSliderAttachment;

@@ -48,6 +48,10 @@
                 file="Source/UI/Modules/Components/RadioButtonGroup.cpp"/>
           <FILE id="z1a4IM" name="RadioButtonGroup.h" compile="0" resource="0"
                 file="Source/UI/Modules/Components/RadioButtonGroup.h"/>
+          <FILE id="WlDYtm" name="RadioButtonGroupAttachment.cpp" compile="1"
+                resource="0" file="Source/UI/Modules/Components/RadioButtonGroupAttachment.cpp"/>
+          <FILE id="IsrTzC" name="RadioButtonGroupAttachment.h" compile="0" resource="0"
+                file="Source/UI/Modules/Components/RadioButtonGroupAttachment.h"/>
         </GROUP>
         <FILE id="wqnLXn" name="AdsrComponent.cpp" compile="1" resource="0"
               file="Source/UI/Modules/AdsrComponent.cpp"/>

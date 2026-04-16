@@ -305,7 +305,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout CrackedGlassAudioProcessor::
     parameters.push_back (std::make_unique<juce::AudioParameterInt> ("GAIN", "Gain", 0, 150, 60));
 
     // waveshape and tuning
-    parameters.push_back (std::make_unique<juce::AudioParameterChoice> ("OSC1WAVESHAPE", "Oscillator 1 Waveshape", juce::StringArray{ "SINE", "SAW", "SQUARE", "NOISE" }, static_cast<int>(OscData::Waveshape::sine)));
+    parameters.push_back (std::make_unique<juce::AudioParameterChoice> ("OSC1WAVESHAPE", "Oscillator 1 Waveshape", juce::StringArray{ "SIN", "SAW", "SQR", "RND" }, static_cast<int>(OscData::Waveshape::sine)));
     parameters.push_back (std::make_unique<juce::AudioParameterInt> ("OSC1COARSEPITCH", "Oscillator 1 Coarse Pitch", -12, 12, 0));
     parameters.push_back (std::make_unique<juce::AudioParameterInt> ("OSC1FINEPITCH", "Oscillator 1 Fine Pitch", -50, 50, 0));
 
@@ -328,7 +328,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout CrackedGlassAudioProcessor::
 
     // distortion
     parameters.push_back (std::make_unique<juce::AudioParameterBool> ("DISTORTIONENABLE", "Enable Distortion", false));
-    parameters.push_back (std::make_unique<juce::AudioParameterChoice> ("DISTORTIONFUNCTION", "Distortion Function", juce::StringArray{ "TANH", "HARD CLIP", "CRACK", "SHATTER" }, static_cast<int>(DistortionData::Function::tanh)));
+    parameters.push_back (std::make_unique<juce::AudioParameterChoice> ("DISTORTIONFUNCTION", "Distortion Function", juce::StringArray{ "TANH", "CLIP", "CRCK", "SHTR" }, static_cast<int>(DistortionData::Function::tanh)));
     parameters.push_back (std::make_unique<juce::AudioParameterFloat> ("DISTORTIONDRIVE", "Distortion Drive", juce::NormalisableRange<float>{ 0.0f, 10.0f }, 0.0f));
 
     return { parameters.begin(), parameters.end() };

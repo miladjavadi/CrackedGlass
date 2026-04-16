@@ -13,20 +13,9 @@
 
 //==============================================================================
 FilterComponent::FilterComponent(juce::AudioProcessorValueTreeState& apvts, const juce::String& filterTypeSelectorID)
+    : filterTypeSelector{ apvts, filterTypeSelectorID, juce::FlexBox::Direction::row, backgroundColour, borderColour, borderColour, titleColour, borderColour }
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
-    const juce::StringArray& filterTypeOptions = dynamic_cast<juce::AudioParameterChoice*>(apvts.getParameter(filterTypeSelectorID))->choices;
-    filterTypeSelector.addItemList(filterTypeOptions, 1);
-
-    filterTypeSelector.setColour(juce::ComboBox::ColourIds::backgroundColourId, deadColour);
-    filterTypeSelector.setColour(juce::ComboBox::ColourIds::textColourId, labelColour);
-    filterTypeSelector.setColour(juce::ComboBox::ColourIds::arrowColourId, borderColour);
-    filterTypeSelector.setColour(juce::ComboBox::ColourIds::outlineColourId, borderColour);
     addAndMakeVisible(filterTypeSelector);
-    setLabelParams(filterTypeLabel);
-
-    filterTypeSelectorAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(apvts, filterTypeSelectorID, filterTypeSelector);
 
     setSliderWithLabel(cutoffFrequencySlider, cutoffFrequencyLabel, cutoffFrequencySliderAttachment, apvts, "CUTOFFFREQUENCY", false);
     setSliderWithLabel(resonanceSlider, resonanceLabel, resonanceSliderAttachment, apvts, "RESONANCE", false);
@@ -47,12 +36,6 @@ FilterComponent::~FilterComponent()
 
 void FilterComponent::paint (juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
 
     g.fillAll(backgroundColour);
 
@@ -67,7 +50,6 @@ void FilterComponent::resized()
     constexpr int padding{ 10 };
     constexpr int margin{ 10 };
     const juce::Rectangle<int> bounds{ getLocalBounds().reduced (margin) };
-    //const juce::Rectangle<int> filterBounds{ bounds.getX(), bounds.getY(), bounds.getWidth() / 4 - padding, bounds.getHeight() };
     const juce::Rectangle<int> filterBounds{ bounds.reduced(0, 0) };
 
     const int rotorSize{ (filterBounds.getWidth() - 3 * padding) / 2 };
@@ -80,8 +62,7 @@ void FilterComponent::resized()
     resonanceSlider.setBounds (cutoffFrequencySlider.getRight() + padding, cutoffFrequencySlider.getY(), rotorSize, rotorSize);
     resonanceLabel.setBounds (resonanceSlider.getX(), resonanceSlider.getY() - labelHeight, rotorSize, labelHeight);
 
-    filterTypeSelector.setBounds (resonanceSlider.getX(), resonanceLabel.getY() - labelHeight - padding, rotorSize, labelHeight);
-    filterTypeLabel.setBounds (cutoffFrequencySlider.getX(), filterTypeSelector.getY(), rotorSize, labelHeight);
+    filterTypeSelector.setBounds (filterBounds.getX() + padding, resonanceLabel.getY() - labelHeight - 2 * padding - 5, filterBounds.getWidth() - 2 * padding, labelHeight + 5);
 
     titleButton.setBounds(0, 0, 140, 35);
 }

@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include "Components/RadioButtonGroup.h"
 #include <JuceHeader.h>
 
 //==============================================================================
@@ -33,9 +34,7 @@ private:
     juce::Colour sliderFillColour = mainColour.withBrightness(1.0f).withSaturation(0.2f);
     juce::Colour deadColour = mainColour.withBrightness(0.5f).withSaturation(0.7f);
 
-    juce::ComboBox functionSelector;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> functionSelectorAttachment;
-    juce::Label functionLabel{ "Function", "Function" };
+    RadioButtonGroup functionSelector;
 
     juce::Slider driveSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> driveSliderAttachment;
