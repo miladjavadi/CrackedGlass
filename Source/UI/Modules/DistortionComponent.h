@@ -19,7 +19,7 @@
 class DistortionComponent  : public juce::Component
 {
 public:
-    DistortionComponent(juce::AudioProcessorValueTreeState& apvts, const juce::String& enableParameterID, const juce::String& functionParameterID, const juce::String& driveParameterID);
+    DistortionComponent(juce::AudioProcessorValueTreeState& apvts, const juce::String& enableParameterID, const juce::String& functionParameterID, const juce::String& driveParameterID, const juce::String& mixParameterID);
     ~DistortionComponent() override;
 
     void paint (juce::Graphics&) override;
@@ -39,6 +39,10 @@ private:
     juce::Slider driveSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> driveSliderAttachment;
     juce::Label driveLabel{ "Drive", "Drive" };
+
+    juce::Slider mixSlider;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> mixSliderAttachment;
+    juce::Label mixLabel{ "Mix", "Mix" };
 
     juce::TextButton titleButton{ "Distortion", "Distortion" };
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> titleButtonAttachment;

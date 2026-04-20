@@ -67,8 +67,9 @@ public:
 private:
     juce::Synthesiser synth;
     DistortionData distortion;
+    juce::dsp::DryWetMixer<float> distortionMixer;
 
-    //juce::dsp::StateVariableTPTFilter<float> dcBlocker;
+    juce::dsp::StateVariableTPTFilter<float> dcBlocker;
     
     juce::AudioProcessorValueTreeState::ParameterLayout createParameters();
 

@@ -46,4 +46,5 @@ private:
     bool isEnabled{ false };
 
     void crackBuffer(juce::AudioBuffer<float>& buffer, float drive);
+
 };

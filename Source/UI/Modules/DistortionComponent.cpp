@@ -12,12 +12,13 @@
 #include "DistortionComponent.h"
 
 //==============================================================================
-DistortionComponent::DistortionComponent(juce::AudioProcessorValueTreeState& apvts, const juce::String& enableParameterID, const juce::String& functionParameterID, const juce::String& driveParameterID)
+DistortionComponent::DistortionComponent(juce::AudioProcessorValueTreeState& apvts, const juce::String& enableParameterID, const juce::String& functionParameterID, const juce::String& driveParameterID, const juce::String& mixParameterID)
     : functionSelector{ apvts, functionParameterID, juce::FlexBox::Direction::row, backgroundColour, borderColour, borderColour, titleColour, borderColour }
 {
     addAndMakeVisible(functionSelector);
 
     setSliderWithLabel(driveSlider, driveLabel, driveSliderAttachment, apvts, driveParameterID, false);
+    setSliderWithLabel(mixSlider, mixLabel, mixSliderAttachment, apvts, mixParameterID, false);
 
     titleButton.setClickingTogglesState(true);
     titleButton.setToggleState(false, juce::dontSendNotification);
@@ -47,16 +48,19 @@ void DistortionComponent::resized()
     constexpr int padding{ 10 };
     constexpr int margin{ 10 };
     const juce::Rectangle<int> bounds{ getLocalBounds().reduced (margin) };
-    const juce::Rectangle<int> sliderBounds{ bounds.reduced(40, 0) };
+    const juce::Rectangle<int> sliderBounds{ bounds.reduced(0, 0) };
 
-    const int rotorSize{ (sliderBounds.getWidth() - 2 * padding) / 1 };
+    const int rotorSize{ (sliderBounds.getWidth() - 3 * padding) / 2 };
     constexpr int labelHeight{ 20 };
     const int sliderStartY{ bounds.getBottom() - rotorSize - margin };
 
     driveSlider.setBounds (sliderBounds.getX() + padding, sliderStartY, rotorSize, rotorSize);
     driveLabel.setBounds (driveSlider.getX(), driveSlider.getY() - labelHeight, rotorSize, labelHeight);
 
-    functionSelector.setBounds (sliderBounds.getX() - margin, driveLabel.getY() - labelHeight - padding - margin, sliderBounds.getWidth() + 2 * margin, labelHeight);
+    mixSlider.setBounds (driveSlider.getRight() + padding, driveSlider.getY(), rotorSize, rotorSize);
+    mixLabel.setBounds (mixSlider.getX(), mixSlider.getY() - labelHeight, rotorSize, labelHeight);
+
+    functionSelector.setBounds (sliderBounds.getX() + padding, driveLabel.getY() - labelHeight - padding - margin, sliderBounds.getWidth() - 2 * padding, labelHeight);
 
     titleButton.setBounds(0, 0, 140, 35);
 }

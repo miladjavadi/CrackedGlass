@@ -121,9 +121,11 @@ void CrackedGlassAudioProcessor::prepareToPlay (double sampleRate, int samplesPe
     }
 
     distortion.prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
-    //dcBlocker.prepare(spec);
-    //dcBlocker.setCutoffFrequency(5.0f);
-    //dcBlocker.setType(juce::dsp::StateVariableTPTFilterType::highpass);
+    dcBlocker.prepare(spec);
+    dcBlocker.setCutoffFrequency(5.0f);
+    dcBlocker.setType(juce::dsp::StateVariableTPTFilterType::highpass);
+
+    distortionMixer.prepare(spec);
 }
 
 void CrackedGlassAudioProcessor::releaseResources()
@@ -201,6 +203,7 @@ void CrackedGlassAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     std::atomic<float>& distortionEnable = *apvts.getRawParameterValue("DISTORTIONENABLE");
     std::atomic<float>& distortionFunction = *apvts.getRawParameterValue("DISTORTIONFUNCTION");
     std::atomic<float>& distortionDrive = *apvts.getRawParameterValue("DISTORTIONDRIVE");
+    std::atomic<float>& distortionMix = *apvts.getRawParameterValue("DISTORTIONMIX");
 
     distortion.updateParameters(static_cast<bool>(distortionEnable.load()), distortionDrive.load(), static_cast<DistortionData::Function>(distortionFunction.load()));
 
@@ -227,9 +230,13 @@ void CrackedGlassAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     synth.renderNextBlock (buffer, midiMessages, 0, buffer.getNumSamples());
 
     juce::dsp::AudioBlock<float> block{ buffer };
-    //dcBlocker.process(juce::dsp::ProcessContextReplacing<float>(block));
+    dcBlocker.process(juce::dsp::ProcessContextReplacing<float>(block));
 
+    juce::dsp::ProcessContextReplacing<float> distortionContext{ block };
+    distortionMixer.pushDrySamples(distortionContext.getInputBlock());
     distortion.process(buffer);
+    distortionMixer.mixWetSamples(distortionContext.getOutputBlock());
+    distortionMixer.setWetMixProportion(distortionMix.load());
 
     // get and update output gain
     setGain(*apvts.getRawParameterValue("GAIN") / 100.0f);
@@ -315,6 +322,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout CrackedGlassAudioProcessor::
     parameters.push_back (std::make_unique<juce::AudioParameterBool> ("DISTORTIONENABLE", "Enable Distortion", false));
     parameters.push_back (std::make_unique<juce::AudioParameterChoice> ("DISTORTIONFUNCTION", "Distortion Function", juce::StringArray{ "TANH", "CLIP", "CRCK", "SHTR" }, static_cast<int>(DistortionData::Function::tanh)));
     parameters.push_back (std::make_unique<juce::AudioParameterFloat> ("DISTORTIONDRIVE", "Distortion Drive", juce::NormalisableRange<float>{ 0.0f, 10.0f }, 0.0f));
+    parameters.push_back (std::make_unique<juce::AudioParameterFloat> ("DISTORTIONMIX", "Distortion Mix", juce::NormalisableRange<float>{ 0.0f, 1.0f }, 1.0f));
 
     return { parameters.begin(), parameters.end() };
 }

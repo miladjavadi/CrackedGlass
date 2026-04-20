@@ -18,7 +18,7 @@ CrackedGlassAudioProcessorEditor::CrackedGlassAudioProcessorEditor (CrackedGlass
     , header (audioProcessor.apvts)
     , filter(audioProcessor.apvts, juce::String{"FILTERTYPE"})
     , modAdsr ("Mod Envelope", audioProcessor.apvts, "MODATTACK", "MODDECAY", "MODSUSTAIN", "MODRELEASE", juce::Colours::purple, true, "MODENABLE")
-    , distortion (audioProcessor.apvts, "DISTORTIONENABLE", "DISTORTIONFUNCTION", "DISTORTIONDRIVE")
+    , distortion (audioProcessor.apvts, "DISTORTIONENABLE", "DISTORTIONFUNCTION", "DISTORTIONDRIVE", "DISTORTIONMIX")
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
