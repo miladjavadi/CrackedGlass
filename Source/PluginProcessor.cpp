@@ -121,9 +121,9 @@ void CrackedGlassAudioProcessor::prepareToPlay (double sampleRate, int samplesPe
     }
 
     distortion.prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
-    dcBlocker.prepare(spec);
-    dcBlocker.setCutoffFrequency(5.0f);
-    dcBlocker.setType(juce::dsp::StateVariableTPTFilterType::highpass);
+    //dcBlocker.prepare(spec);
+    //dcBlocker.setCutoffFrequency(5.0f);
+    //dcBlocker.setType(juce::dsp::StateVariableTPTFilterType::highpass);
 }
 
 void CrackedGlassAudioProcessor::releaseResources()
@@ -160,8 +160,6 @@ bool CrackedGlassAudioProcessor::isBusesLayoutSupported (const BusesLayout& layo
 
 void CrackedGlassAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-    //DBG("processBlock called with " << buffer.getNumSamples() << " samples");
-
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
@@ -176,32 +174,23 @@ void CrackedGlassAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     std::atomic<float>& release = *apvts.getRawParameterValue("RELEASE");
 
     // get waveshape and lfo parameters
-    juce::AudioParameterChoice* waveshapeParam = dynamic_cast<juce::AudioParameterChoice*>(apvts.getParameter("OSC1WAVESHAPE"));
-    OscData::Waveshape waveshape = static_cast<OscData::Waveshape>(waveshapeParam->getIndex());
-
+    std::atomic<float>& waveshape = *apvts.getRawParameterValue("OSC1WAVESHAPE");
     std::atomic<float>& fmFrequency = *apvts.getRawParameterValue("FMFREQUENCY");
     std::atomic<float>& fmDepth = *apvts.getRawParameterValue("FMDEPTH");
 
     // get tuning parameters
-    juce::AudioParameterInt* coarsePitchParam = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter("OSC1COARSEPITCH"));
-    int coarsePitch = coarsePitchParam->get();
-
-    juce::AudioParameterInt* finePitchParam = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter("OSC1FINEPITCH"));
-    int finePitch = finePitchParam->get();
+    std::atomic<float>& coarsePitch = *apvts.getRawParameterValue("OSC1COARSEPITCH");
+    std::atomic<float>& finePitch = *apvts.getRawParameterValue("OSC1FINEPITCH");
 
     // get and update filter parameters
-    juce::AudioParameterBool* filterEnableParam = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter("FILTERENABLE"));
-    bool filterEnable = filterEnableParam->get();
-
-    juce::AudioParameterChoice* filterTypeParam = dynamic_cast<juce::AudioParameterChoice*>(apvts.getParameter("FILTERTYPE"));
-    juce::dsp::StateVariableTPTFilterType filterType = static_cast<juce::dsp::StateVariableTPTFilterType>(filterTypeParam->getIndex());
+    std::atomic<float>& filterEnable = *apvts.getRawParameterValue("FILTERENABLE");
+    std::atomic<float>& filterType = *apvts.getRawParameterValue("FILTERTYPE");
 
     std::atomic<float>& filterCutoffFrequency = *apvts.getRawParameterValue("CUTOFFFREQUENCY");
     std::atomic<float>& filterResonance = *apvts.getRawParameterValue("RESONANCE");
 
     // get mod envelope parameters
-    juce::AudioParameterBool* modEnableParam = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter("MODENABLE"));
-    bool modEnable = modEnableParam->get();
+    std::atomic<float>& modEnable = *apvts.getRawParameterValue("MODENABLE");
 
     std::atomic<float>& modAttack = *apvts.getRawParameterValue("MODATTACK");
     std::atomic<float>& modDecay = *apvts.getRawParameterValue("MODDECAY");
@@ -209,40 +198,36 @@ void CrackedGlassAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     std::atomic<float>& modRelease = *apvts.getRawParameterValue("MODRELEASE");
 
     // get distortion parameters
-    juce::AudioParameterBool* distortionEnableParam = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter("DISTORTIONENABLE"));
-    bool distortionEnable = distortionEnableParam->get();
-
-    juce::AudioParameterChoice* distortionFunctionParam = dynamic_cast<juce::AudioParameterChoice*>(apvts.getParameter("DISTORTIONFUNCTION"));
-    DistortionData::Function distortionFunction = static_cast<DistortionData::Function>(distortionFunctionParam->getIndex());
-
+    std::atomic<float>& distortionEnable = *apvts.getRawParameterValue("DISTORTIONENABLE");
+    std::atomic<float>& distortionFunction = *apvts.getRawParameterValue("DISTORTIONFUNCTION");
     std::atomic<float>& distortionDrive = *apvts.getRawParameterValue("DISTORTIONDRIVE");
 
-    distortion.updateParameters(distortionEnable, distortionDrive, distortionFunction);
+    distortion.updateParameters(static_cast<bool>(distortionEnable.load()), distortionDrive.load(), static_cast<DistortionData::Function>(distortionFunction.load()));
 
     for (int i = 0; i < synth.getNumVoices(); ++i)
     {
         if (auto voice = dynamic_cast<SynthVoice*>(synth.getVoice(i)))
         {
             // update oscillator
-            voice->getOscillator().setWaveshape(waveshape);
+            voice->getOscillator().setWaveshape(static_cast<OscData::Waveshape>(waveshape.load()));
             voice->getOscillator().setLFOParams(fmDepth.load(), fmFrequency.load());
-            voice->getOscillator().setTuningFactor(coarsePitch, finePitch);
+            voice->getOscillator().setTuningFactor(static_cast<int>(coarsePitch.load()), static_cast<int>(finePitch.load()));
 
             // update amplitude envelope
             voice->updateAdsr (attack.load(), decay.load(), sustain.load(), release.load());
 
             // update filter
-            voice->updateFilter(filterEnable, filterType, filterCutoffFrequency.load(), filterResonance.load());
+            voice->updateFilter(static_cast<bool>(filterEnable.load()), static_cast<juce::dsp::StateVariableTPTFilterType>(filterType.load()), filterCutoffFrequency.load(), filterResonance.load());
 
             // update mod envelope
-            voice->updateModAdsr (modEnable, modAttack.load(), modDecay.load(), modSustain.load(), modRelease.load());
+            voice->updateModAdsr (static_cast<bool>(modEnable.load()), modAttack.load(), modDecay.load(), modSustain.load(), modRelease.load());
         }
     }
 
     synth.renderNextBlock (buffer, midiMessages, 0, buffer.getNumSamples());
 
     juce::dsp::AudioBlock<float> block{ buffer };
-    dcBlocker.process(juce::dsp::ProcessContextReplacing<float>(block));
+    //dcBlocker.process(juce::dsp::ProcessContextReplacing<float>(block));
 
     distortion.process(buffer);
 

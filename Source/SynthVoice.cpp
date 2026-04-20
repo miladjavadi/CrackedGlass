@@ -74,7 +74,7 @@ void SynthVoice::updateAdsr(const float attack, const float decay, const float s
 
 void SynthVoice::updateFilter(bool enable, juce::dsp::StateVariableTPTFilterType filterType, float cutoffFrequency, float resonance)
 {
-    float modulator{ modAdsrIsEnabled ? modAdsr.getNextSample() : 1.0f };
+    float modulator{ modAdsrIsEnabled.load() ? modAdsr.getNextSample() : 1.0f};
     
     float smoothedCutoffFrequency{ cutoffFrequencyRamp.getNextValue() };
     cutoffFrequencyRamp.setTargetValue(cutoffFrequency);
@@ -84,7 +84,7 @@ void SynthVoice::updateFilter(bool enable, juce::dsp::StateVariableTPTFilterType
 
 void SynthVoice::updateModAdsr(bool enable, float attack, float decay, float sustain, float release)
 {
-    modAdsrIsEnabled = enable;
+    modAdsrIsEnabled.store(enable);
     modAdsr.updateADSR(attack, decay, sustain, release);
 }
 
@@ -109,15 +109,15 @@ void SynthVoice::renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int sta
     filter.process(synthBuffer);
     gain.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
 
-    if (isFirstBlock)
+    if (isFirstBlock.load())
     {
-        synthBuffer.applyGainRamp(startSample, numSamples, 0.0f, 1.0f);
-        isFirstBlock = false;
+        synthBuffer.applyGainRamp(0, numSamples, 0.0f, 1.0f);
+        isFirstBlock.store(false);
     }
 
     if (!adsr.isActive() && !modAdsr.isActive())
     {
-        synthBuffer.applyGainRamp(startSample, numSamples, 1.0f, 0.0f);
+        synthBuffer.applyGainRamp(0, numSamples, 1.0f, 0.0f);
     }
 
     for (int i{ 0 }; i < outputBuffer.getNumChannels(); ++i)

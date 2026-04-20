@@ -44,7 +44,7 @@ public:
 
 private:
     juce::AudioProcessorValueTreeState& m_apvts;
-    juce::AudioParameterChoice* m_radioParameter;
+    juce::String m_radioParameterID;
     std::vector<std::unique_ptr<RadioButton>> buttonArray{};
 
     juce::FlexBox::Direction m_direction{};

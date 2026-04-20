@@ -36,14 +36,10 @@ private:
 
     juce::Label titleLabel;
 
-    //juce::ComboBox oscWaveshapeSelector;
-
     juce::Slider coarsePitchSlider;
     juce::Slider finePitchSlider;
     juce::Slider lfoFrequencySlider;
     juce::Slider lfoDepthSlider;
-
-    //std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> oscWaveshapeSelectorAttachment;
 
     RadioButtonGroup waveshapeSelector;
 

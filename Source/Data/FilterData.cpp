@@ -28,7 +28,7 @@ void FilterData::process(juce::AudioBuffer<float>& buffer)
 
     juce::dsp::AudioBlock<float> block{ buffer };
 
-    if (isEnabled)
+    if (isEnabled.load())
     {
         filter.process(juce::dsp::ProcessContextReplacing<float>{ block });
     }

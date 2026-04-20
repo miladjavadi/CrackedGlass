@@ -43,8 +43,8 @@ private:
     AdsrData modAdsr;
 
     juce::SmoothedValue<float> cutoffFrequencyRamp;
-    bool modAdsrIsEnabled{ false };
+    std::atomic<bool> modAdsrIsEnabled{ false };
     juce::dsp::Gain<float> gain;
     bool isPrepared{ false };
-    bool isFirstBlock{ true };
+    std::atomic<bool> isFirstBlock{ true };
 };

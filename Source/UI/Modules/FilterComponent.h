@@ -34,10 +34,6 @@ private:
     juce::Colour sliderFillColour = mainColour.withBrightness(1.0f).withSaturation(0.2f);
     juce::Colour deadColour = mainColour.withBrightness(0.5f).withSaturation(0.7f);
 
-    //juce::ComboBox filterTypeSelector;
-    //std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> filterTypeSelectorAttachment;
-    //juce::Label filterTypeLabel{ "Type", "Type" };
-
     RadioButtonGroup filterTypeSelector;
 
     juce::Slider cutoffFrequencySlider;

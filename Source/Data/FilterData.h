@@ -23,5 +23,5 @@ public:
 private:
     juce::dsp::StateVariableTPTFilter<float> filter;
     bool isPrepared{ false };
-    bool isEnabled{ false };
+    std::atomic<bool> isEnabled{ false };
 };

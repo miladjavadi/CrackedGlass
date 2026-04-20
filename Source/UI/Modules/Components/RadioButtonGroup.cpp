@@ -23,7 +23,7 @@ RadioButtonGroup::RadioButtonGroup(juce::AudioProcessorValueTreeState& apvts,
     const juce::Colour& textColourOn,
     const juce::Colour& outlineColour)
     : m_apvts{ apvts }
-    , m_radioParameter{ dynamic_cast<juce::AudioParameterChoice*>(apvts.getParameter(radioParameterID)) }
+    , m_radioParameterID{ radioParameterID }
     , m_direction{ direction }
     , m_buttonOffColour{ buttonOffColour }
     , m_buttonOnColour{ buttonOnColour }
@@ -34,31 +34,41 @@ RadioButtonGroup::RadioButtonGroup(juce::AudioProcessorValueTreeState& apvts,
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
 
-    apvts.addParameterListener(radioParameterID, this);
+    apvts.addParameterListener(m_radioParameterID, this);
 
-    const juce::StringArray& choices{ m_radioParameter->choices };
-
-    buttonArray.reserve(choices.size());
-
-    for (size_t i{ 0 }; i < choices.size(); ++i)
+    if (juce::RangedAudioParameter* radioParameter = apvts.getParameter(m_radioParameterID))
     {
-        buttonArray.push_back(std::make_unique<RadioButton>(choices[i], choices[i]));
-        buttonArray[i]->setColour(juce::TextButton::ColourIds::buttonColourId, m_buttonOffColour);
-        buttonArray[i]->setColour(juce::TextButton::ColourIds::buttonOnColourId, m_buttonOnColour);
-        buttonArray[i]->setColour(juce::TextButton::ColourIds::textColourOffId, m_textColourOff);
-        buttonArray[i]->setColour(juce::TextButton::ColourIds::textColourOnId, m_textColourOn);
-        buttonArray[i]->setRadioGroupId(1);
-        buttonArray[i]->setClickingTogglesState(true);
-        buttonArray[i]->onClick = [this, i]() { setParameterValue(static_cast<int>(i)); };
-        addAndMakeVisible(*(buttonArray.back()));
+        if (juce::AudioParameterChoice* radioChoiceParameter = dynamic_cast<juce::AudioParameterChoice*>(radioParameter))
+        {
+            const juce::StringArray& choices{ radioChoiceParameter->choices };
+
+            buttonArray.reserve(choices.size());
+
+            for (size_t i{ 0 }; i < choices.size(); ++i)
+            {
+                buttonArray.push_back(std::make_unique<RadioButton>(choices[i], choices[i]));
+                buttonArray[i]->setColour(juce::TextButton::ColourIds::buttonColourId, m_buttonOffColour);
+                buttonArray[i]->setColour(juce::TextButton::ColourIds::buttonOnColourId, m_buttonOnColour);
+                buttonArray[i]->setColour(juce::TextButton::ColourIds::textColourOffId, m_textColourOff);
+                buttonArray[i]->setColour(juce::TextButton::ColourIds::textColourOnId, m_textColourOn);
+                buttonArray[i]->setRadioGroupId(1);
+                buttonArray[i]->setClickingTogglesState(true);
+                buttonArray[i]->onClick = [this, i]() { setParameterValue(static_cast<int>(i)); };
+                addAndMakeVisible(*(buttonArray.back()));
+            }
+        }
+    }
+    else
+    {
+        jassert(false);
     }
 
-    parameterChanged(radioParameterID, static_cast<float>(m_radioParameter->getIndex()));
+    parameterChanged(radioParameterID, apvts.getRawParameterValue(m_radioParameterID)->load());
 }
 
 RadioButtonGroup::~RadioButtonGroup()
 {
-    m_apvts.removeParameterListener(m_radioParameter->getParameterID(), this);
+    m_apvts.removeParameterListener(m_radioParameterID, this);
 }
 
 void RadioButtonGroup::paint (juce::Graphics& g)
@@ -139,15 +149,20 @@ void RadioButtonGroup::setAndUpdateColours(const juce::Colour& buttonOffColour,
 
 void RadioButtonGroup::setParameterValue(int newValue)
 {
-    m_radioParameter->beginChangeGesture();
-    //m_radioParameter->setValueNotifyingHost(m_radioParameter->convertFrom0to1(newValue));
-    m_radioParameter->setValueNotifyingHost(m_radioParameter->convertTo0to1(newValue));
-    m_radioParameter->endChangeGesture();
+    if (juce::RangedAudioParameter* radioParameter = m_apvts.getParameter(m_radioParameterID))
+    {
+        if (juce::AudioParameterChoice* radioChoiceParameter = dynamic_cast<juce::AudioParameterChoice*>(radioParameter))
+        {
+            radioChoiceParameter->beginChangeGesture();
+            radioChoiceParameter->setValueNotifyingHost(radioChoiceParameter->convertTo0to1(newValue));
+            radioChoiceParameter->endChangeGesture();
+        }
+    }
 }
 
 void RadioButtonGroup::parameterChanged(const juce::String& parameterID, float newValue)
 {
-    if (parameterID == m_radioParameter->getParameterID())
+    if (parameterID == m_radioParameterID)
     {
         size_t selectedIndex{ static_cast<size_t>(std::roundf(newValue)) };
 
