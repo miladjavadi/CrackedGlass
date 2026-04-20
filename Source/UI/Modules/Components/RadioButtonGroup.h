@@ -22,6 +22,8 @@ public:
     RadioButtonGroup(juce::AudioProcessorValueTreeState& apvts,
         const juce::String& radioParameterID,
         const juce::FlexBox::Direction& direction,
+        size_t numRows,
+        size_t numCols,
         const juce::Colour& buttonOffColour,
         const juce::Colour& buttonOnColour,
         const juce::Colour& textColourOff,
@@ -48,6 +50,8 @@ private:
     std::vector<std::unique_ptr<RadioButton>> buttonArray{};
 
     juce::FlexBox::Direction m_direction{};
+    size_t m_numRows{};
+    size_t m_numCols{};
     juce::Colour m_buttonOffColour{};
     juce::Colour m_buttonOnColour{};
     juce::Colour m_textColourOff{};

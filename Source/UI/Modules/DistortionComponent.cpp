@@ -13,7 +13,7 @@
 
 //==============================================================================
 DistortionComponent::DistortionComponent(juce::AudioProcessorValueTreeState& apvts, const juce::String& enableParameterID, const juce::String& functionParameterID, const juce::String& driveParameterID, const juce::String& mixParameterID)
-    : functionSelector{ apvts, functionParameterID, juce::FlexBox::Direction::row, backgroundColour, borderColour, borderColour, titleColour, borderColour }
+    : functionSelector{ apvts, functionParameterID, juce::FlexBox::Direction::row, 2, 2, backgroundColour, borderColour, borderColour, titleColour, borderColour }
 {
     addAndMakeVisible(functionSelector);
 
@@ -60,7 +60,7 @@ void DistortionComponent::resized()
     mixSlider.setBounds (driveSlider.getRight() + padding, driveSlider.getY(), rotorSize, rotorSize);
     mixLabel.setBounds (mixSlider.getX(), mixSlider.getY() - labelHeight, rotorSize, labelHeight);
 
-    functionSelector.setBounds (sliderBounds.getX() + padding, driveLabel.getY() - labelHeight - padding - margin, sliderBounds.getWidth() - 2 * padding, labelHeight);
+    functionSelector.setBounds (sliderBounds.getX() + padding + margin, driveLabel.getY() - 2 * labelHeight - padding - margin - 10, sliderBounds.getWidth() - 2 * (padding + margin), 2 * labelHeight + 10);
 
     titleButton.setBounds(0, 0, 140, 35);
 }

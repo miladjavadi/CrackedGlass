@@ -13,7 +13,7 @@
 
 //==============================================================================
 FilterComponent::FilterComponent(juce::AudioProcessorValueTreeState& apvts, const juce::String& filterTypeSelectorID)
-    : filterTypeSelector{ apvts, filterTypeSelectorID, juce::FlexBox::Direction::row, backgroundColour, borderColour, borderColour, titleColour, borderColour }
+    : filterTypeSelector{ apvts, filterTypeSelectorID, juce::FlexBox::Direction::row, 1, 3, backgroundColour, borderColour, borderColour, titleColour, borderColour }
 {
     addAndMakeVisible(filterTypeSelector);
 

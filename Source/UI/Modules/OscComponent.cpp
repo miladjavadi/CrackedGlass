@@ -13,7 +13,7 @@
 
 //==============================================================================
 OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, const juce::String& waveshapeSelectorID)
-    : waveshapeSelector{ apvts, waveshapeSelectorID, juce::FlexBox::Direction::row, backgroundColour, borderColour, borderColour, titleColour, borderColour }
+    : waveshapeSelector{ apvts, waveshapeSelectorID, juce::FlexBox::Direction::row, 1, 4, backgroundColour, borderColour, borderColour, titleColour, borderColour }
 {   
     setSliderWithLabel(coarsePitchSlider, coarsePitchLabel, coarsePitchSliderAttachment, apvts, "OSC1COARSEPITCH");
     setSliderWithLabel(finePitchSlider, finePitchLabel, finePitchSliderAttachment, apvts, "OSC1FINEPITCH");

@@ -17,6 +17,8 @@
 RadioButtonGroup::RadioButtonGroup(juce::AudioProcessorValueTreeState& apvts,
     const juce::String& radioParameterID,
     const juce::FlexBox::Direction& direction,
+    size_t numRows,
+    size_t numCols,
     const juce::Colour& buttonOffColour,
     const juce::Colour& buttonOnColour,
     const juce::Colour& textColourOff,
@@ -25,6 +27,8 @@ RadioButtonGroup::RadioButtonGroup(juce::AudioProcessorValueTreeState& apvts,
     : m_apvts{ apvts }
     , m_radioParameterID{ radioParameterID }
     , m_direction{ direction }
+    , m_numRows{ numRows }
+    , m_numCols{ numCols }
     , m_buttonOffColour{ buttonOffColour }
     , m_buttonOnColour{ buttonOnColour }
     , m_textColourOff{ textColourOff }
@@ -63,6 +67,8 @@ RadioButtonGroup::RadioButtonGroup(juce::AudioProcessorValueTreeState& apvts,
         jassert(false);
     }
 
+    jassert(getNumButtons() == m_numRows * m_numCols);
+
     parameterChanged(radioParameterID, apvts.getRawParameterValue(m_radioParameterID)->load());
 }
 
@@ -86,41 +92,56 @@ void RadioButtonGroup::paintOverChildren (juce::Graphics& g)
     g.setColour(m_outlineColour);
     g.drawRect(getLocalBounds(), 1.0f);
 
-    int numberOfButtons{ static_cast<int>(buttonArray.size()) };
-    int buttonWidth{ getLocalBounds().getWidth() / numberOfButtons };
-    int buttonHeight{ getLocalBounds().getHeight() / numberOfButtons };
+    int buttonWidth{ getLocalBounds().getWidth() / static_cast<int>(m_numCols) };
+    int buttonHeight{ getLocalBounds().getHeight() / static_cast<int>(m_numRows) };
 
-    switch (m_direction)
+    for (size_t i{ 1 }; i < m_numCols; ++i)
     {
-    case juce::FlexBox::Direction::row:
-    case juce::FlexBox::Direction::rowReverse:
-        for (int i{ 1 }; i < numberOfButtons; ++i)
-        {
-            g.drawVerticalLine(getLocalBounds().getX() + i * buttonWidth, getLocalBounds().getY(), getLocalBounds().getBottom());
-        }
-        break;
-    case juce::FlexBox::Direction::column:
-    case juce::FlexBox::Direction::columnReverse:
-        for (int i{ 1 }; i < numberOfButtons; ++i)
-        {
-            g.drawHorizontalLine(getLocalBounds().getY() + i * buttonHeight, getLocalBounds().getX(), getLocalBounds().getRight());
-        }
-        break;
+        g.drawVerticalLine(getLocalBounds().getX() + i * buttonWidth, getLocalBounds().getY(), getLocalBounds().getBottom());
     }
-    
+    for (size_t i{ 1 }; i < m_numRows; ++i)
+    {
+        g.drawHorizontalLine(getLocalBounds().getY() + i * buttonHeight, getLocalBounds().getX(), getLocalBounds().getRight());
+    }
 }
 
 void RadioButtonGroup::resized()
 {
-    juce::FlexBox fb;
-    fb.flexDirection = m_direction;
+    juce::Grid grid;
 
-    for (std::unique_ptr<RadioButton>& button : buttonArray)
+    using TrackInfo = juce::Grid::TrackInfo;
+    using Fr = juce::Grid::Fr;
+
+    for (size_t row{ 0 }; row < m_numRows; ++row)
     {
-        fb.items.add(juce::FlexItem(*button).withFlex(1));
+        grid.templateRows.add(TrackInfo(Fr(1)));
+    }
+    for (size_t col{ 0 }; col < m_numCols; ++col)
+    {
+        grid.templateColumns.add(TrackInfo(Fr(1)));
     }
 
-    fb.performLayout(getLocalBounds());
+    for (size_t row{ 1 }; row <= m_numRows; ++row)
+    {
+        for (size_t col{ 1 }; col <= m_numCols; ++col)
+        {
+            switch (m_direction)
+            {
+            case juce::FlexBox::Direction::row:
+            case juce::FlexBox::Direction::rowReverse:
+                grid.items.add(juce::GridItem(*(buttonArray[(row - 1) * m_numRows + (col - 1)])).withArea(row, col));
+                break;
+            case juce::FlexBox::Direction::column:
+            case juce::FlexBox::Direction::columnReverse:
+                grid.items.add(juce::GridItem(*(buttonArray[(row - 1) * m_numRows + (col - 1)])).withArea(col, row));
+                break;
+            default:
+                jassert(false);
+            }
+        }
+    }
+
+    grid.performLayout(getLocalBounds());
 }
 
 void RadioButtonGroup::setAndUpdateColours(const juce::Colour& buttonOffColour,

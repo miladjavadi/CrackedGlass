@@ -27,8 +27,8 @@ CrackedGlassAudioProcessorEditor::CrackedGlassAudioProcessorEditor (CrackedGlass
     setLookAndFeel(crackedGlassLookAndFeel.get());
 
     setSize (windowWidth, windowHeight);
-    setResizable(true, true);
-    setResizeLimits(windowWidth, windowHeight, 4 * windowWidth, 4 * windowWidth);
+    //setResizable(true, true);
+    //setResizeLimits(windowWidth, windowHeight, 4 * windowWidth, 4 * windowWidth);
     
     addAndMakeVisible(adsr);
     addAndMakeVisible(osc);
