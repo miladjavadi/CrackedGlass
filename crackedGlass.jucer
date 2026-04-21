@@ -42,6 +42,10 @@
                 file="Source/UI/Modules/Components/AdsrGraphComponent.cpp"/>
           <FILE id="p8Ga8C" name="AdsrGraphComponent.h" compile="0" resource="0"
                 file="Source/UI/Modules/Components/AdsrGraphComponent.h"/>
+          <FILE id="wtJvcA" name="LabeledRotarySlider.cpp" compile="1" resource="0"
+                file="Source/UI/Modules/Components/LabeledRotarySlider.cpp"/>
+          <FILE id="blKYXG" name="LabeledRotarySlider.h" compile="0" resource="0"
+                file="Source/UI/Modules/Components/LabeledRotarySlider.h"/>
           <FILE id="TlGOaE" name="RadioButton.cpp" compile="1" resource="0" file="Source/UI/Modules/Components/RadioButton.cpp"/>
           <FILE id="q5cTgR" name="RadioButton.h" compile="0" resource="0" file="Source/UI/Modules/Components/RadioButton.h"/>
           <FILE id="LYkUds" name="RadioButtonGroup.cpp" compile="1" resource="0"
