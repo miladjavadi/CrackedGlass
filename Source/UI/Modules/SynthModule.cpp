@@ -25,22 +25,11 @@ SynthModule::~SynthModule()
 
 void SynthModule::paint (juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
 
-       You should replace everything in this method with your own
-       drawing code..
-    */
+    g.fillAll (getActiveColourPalette().backgroundColour);
 
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
-
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (juce::Colours::white);
-    g.setFont (juce::FontOptions (14.0f));
-    g.drawText ("SynthModule", getLocalBounds(),
-                juce::Justification::centred, true);   // draw some placeholder text
+    g.setColour (getActiveColourPalette().borderColour);
+    g.drawRect (getLocalBounds(), 2);   // draw an outline around the component
 }
 
 void SynthModule::resized()
@@ -48,4 +37,14 @@ void SynthModule::resized()
     // This method is where you should set the bounds of any child
     // components that your component contains..
 
+}
+
+void SynthModule::updateColoursFromMainHue()
+{
+    m_colourPalette.backgroundColour = m_mainHue.withAlpha(0.15f).withBrightness(0.9f).withSaturation(0.9f);
+    m_colourPalette.labelColour = m_mainHue.withBrightness(1.0f).withSaturation(0.3f);
+    m_colourPalette.borderColour = m_mainHue.withBrightness(1.0f).withSaturation(0.6f);
+    m_colourPalette.titleColour = m_mainHue.withBrightness(0.1f).withSaturation(0.9f);
+    m_colourPalette.sliderFillColour = m_mainHue.withBrightness(1.0f).withSaturation(0.2f);
+    m_colourPalette.deadColour = m_mainHue.withBrightness(0.5f).withSaturation(0.7f);
 }

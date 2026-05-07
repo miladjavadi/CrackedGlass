@@ -52,6 +52,7 @@ set(SourceFiles
     Source/UI/Modules/OscComponent.h
     Source/UI/Modules/SynthModule.cpp
     Source/UI/Modules/SynthModule.h
+    Source/UI/Modules/ModuleColourPalette.h
     Source/UI/Modules/Components/AdsrGraphComponent.cpp
     Source/UI/Modules/Components/AdsrGraphComponent.h
     Source/UI/Modules/Components/LabeledRotarySlider.cpp
@@ -77,6 +78,8 @@ juce_add_plugin(${PROJECT_NAME}
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SourceFiles})
 
+juce_generate_juce_header(${PROJECT_NAME})
+
 target_sources(${PROJECT_NAME} PRIVATE ${SourceFiles})
 
 target_compile_definitions(${PROJECT_NAME}
@@ -100,8 +103,6 @@ juce::juce_dsp
 juce::juce_recommended_config_flags
 juce::juce_recommended_lto_flags
 juce::juce_recommended_warning_flags)
-
-juce_generate_juce_header(${PROJECT_NAME})
 
 set(BINARY_RESOURCES
     Source/UI/Fonts/QuanticoBold.ttf
