@@ -13,21 +13,13 @@
 
 //==============================================================================
 DistortionComponent::DistortionComponent(juce::AudioProcessorValueTreeState& apvts, const juce::String& enableParameterID, const juce::String& functionParameterID, const juce::String& driveParameterID, const juce::String& mixParameterID)
-    : functionSelector{ apvts, functionParameterID, juce::FlexBox::Direction::row, 2, 2, backgroundColour, borderColour, borderColour, titleColour, borderColour }
+    : SynthModule{ "Distortion", juce::Colours::red, true, apvts, "DISTORTIONENABLE" }
+    , functionSelector{ apvts, functionParameterID, juce::FlexBox::Direction::row, 2, 2, backgroundColour, borderColour, borderColour, titleColour, borderColour }
 {
     addAndMakeVisible(functionSelector);
 
     setSliderWithLabel(driveSlider, driveLabel, driveSliderAttachment, apvts, driveParameterID, false);
     setSliderWithLabel(mixSlider, mixLabel, mixSliderAttachment, apvts, mixParameterID, false);
-
-    titleButton.setClickingTogglesState(true);
-    titleButton.setToggleState(false, juce::dontSendNotification);
-    titleButton.setColour(juce::TextButton::ColourIds::buttonColourId, backgroundColour);
-    titleButton.setColour(juce::TextButton::ColourIds::textColourOffId, borderColour);
-    titleButton.setColour(juce::TextButton::ColourIds::buttonOnColourId, borderColour);
-    titleButton.setColour(juce::TextButton::ColourIds::textColourOnId, titleColour);
-    titleButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(apvts, enableParameterID, titleButton);
-    addAndMakeVisible(titleButton);
 }
 
 DistortionComponent::~DistortionComponent()
@@ -36,14 +28,12 @@ DistortionComponent::~DistortionComponent()
 
 void DistortionComponent::paint (juce::Graphics& g)
 {
-    g.fillAll(backgroundColour);
-
-    g.setColour(borderColour);
-    g.drawRect(getLocalBounds(), 2);
+    SynthModule::paint(g);
 }
 
 void DistortionComponent::resized()
 {
+    SynthModule::resized();
 
     constexpr int padding{ 10 };
     constexpr int margin{ 10 };
@@ -61,8 +51,6 @@ void DistortionComponent::resized()
     mixLabel.setBounds (mixSlider.getX(), mixSlider.getY() - labelHeight, rotorSize, labelHeight);
 
     functionSelector.setBounds (sliderBounds.getX() + padding + margin, driveLabel.getY() - 2 * labelHeight - padding - margin - 10, sliderBounds.getWidth() - 2 * (padding + margin), 2 * labelHeight + 10);
-
-    titleButton.setBounds(0, 0, 140, 35);
 }
 
 void DistortionComponent::setSliderParams (juce::Slider& slider, bool useTextBox)
@@ -97,4 +85,9 @@ void DistortionComponent::setSliderWithLabel (juce::Slider& slider, juce::Label&
     setSliderParams(slider, useTextBox);
     attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, paramID, slider);
     setLabelParams(label);
+}
+
+void DistortionComponent::updateDerivedComponentColours()
+{
+
 }

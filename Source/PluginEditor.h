@@ -15,6 +15,7 @@
 #include "UI/Modules/HeaderComponent.h"
 #include "UI/Modules/FilterComponent.h"
 #include "UI/Modules/DistortionComponent.h"
+#include "UI/Modules/SynthModule.h"
 #include "UI/Appearance/CrackedGlassLookAndFeel.h"
 
 //==============================================================================

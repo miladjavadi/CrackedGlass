@@ -20,19 +20,22 @@
 class SynthModule  : public juce::Component
 {
 public:
-    SynthModule(const juce::String& title, const juce::Colour& mainHue, bool canBeDisabled, bool initialState);
+    SynthModule(const juce::String& title, const juce::Colour& mainHue, bool canBeDisabled, juce::AudioProcessorValueTreeState& apvts, const juce::String& enableParameterID = "");
     ~SynthModule() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
 
+protected:
+    virtual void updateDerivedComponentColours() = 0; // use this to update colours of additional child components in derived classes, see updateBaseComponentColours()
+
 private:
     const CrackedGlass::ModuleColourPalette m_greyscaleColourPalette{
-    juce::Colour(0.0f, 0.0f, 0.9f, 0.15f),
-    juce::Colour(0.0f, 0.0f, 0.9f, 1.0f),
-    juce::Colour(0.0f, 0.0f, 0.9f, 1.0f),
-    juce::Colour(0.0f, 0.0f, 0.9f, 1.0f),
-    juce::Colour(0.0f, 0.0f, 0.5f, 1.0f)
+    juce::Colour(0.0f, 0.0f, 0.7f, 0.15f),
+    juce::Colour(0.0f, 0.0f, 0.7f, 1.0f),
+    juce::Colour(0.0f, 0.0f, 0.7f, 1.0f),
+    juce::Colour(0.0f, 0.0f, 0.7f, 1.0f),
+    juce::Colour(0.0f, 0.0f, 0.25f, 1.0f)
     };
 
     juce::String m_title{};
@@ -41,8 +44,8 @@ private:
 
     CrackedGlass::ModuleColourPalette m_colourPalette{};
 
-    bool m_canBeDisabled{};
-    bool m_enabled{};
+    const bool m_canBeDisabled{};
+    bool m_enabled{ true };
 
     // used when module cannot be disabled (i.e., when title button is not clickable)
     juce::Label titleLabel;
@@ -58,6 +61,10 @@ private:
     //void setLabelParams(juce::Label& label);
     //void setSliderWithLabel(juce::Slider& slider, juce::Label& label, std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& attachment, juce::AudioProcessorValueTreeState& apvts, const juce::String& paramID, bool useTextBox = true);
     void performSliderArrayLayout();
+
+    void updateBaseComponentColours();
+
+    void lookAndFeelChanged() override;
 
     void setMainHueFromColour(const juce::Colour& colour)
     {

@@ -8,6 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "UI/Modules/SynthModule.h"
 
 //==============================================================================
 CrackedGlassAudioProcessorEditor::CrackedGlassAudioProcessorEditor (CrackedGlassAudioProcessor& p)

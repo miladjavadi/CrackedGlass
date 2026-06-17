@@ -12,15 +12,40 @@
 #include "SynthModule.h"
 
 //==============================================================================
-SynthModule::SynthModule(const juce::String& title, const juce::Colour& mainHue, bool canBeDisabled, bool initialState)
+SynthModule::SynthModule(const juce::String& title, const juce::Colour& mainHue, bool canBeDisabled, juce::AudioProcessorValueTreeState& apvts, const juce::String& enableParameterID)
     : m_title{ title }
     , m_mainHue{ mainHue }
     , m_canBeDisabled{ canBeDisabled }
-    , m_enabled{ initialState }
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
+    setColourPaletteFromMainHue();
 
+    if (m_canBeDisabled)
+    {
+        titleButton.setClickingTogglesState(true);
+        titleButton.setToggleState(m_enabled, juce::dontSendNotification);
+        
+        titleButton.setButtonText(m_title.toUpperCase());
+        titleButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(apvts, enableParameterID, titleButton);
+        m_enabled = titleButton.getToggleState();
+        titleButton.onClick = [this]
+        {
+            m_enabled = titleButton.getToggleState();
+            sendLookAndFeelChange();
+            repaint();
+        };
+        addAndMakeVisible(titleButton);
+    }
+    else
+    {
+        titleLabel.setText(m_title.toUpperCase(), juce::NotificationType::dontSendNotification);
+        titleLabel.setFont(juce::Font(20.0f, 3));
+        titleLabel.setJustificationType(juce::Justification::centred);
+        addAndMakeVisible(titleLabel);
+    }
+
+    updateBaseComponentColours();
 }
 
 SynthModule::~SynthModule()
@@ -29,7 +54,6 @@ SynthModule::~SynthModule()
 
 void SynthModule::paint(juce::Graphics& g)
 {
-
     g.fillAll(getActiveColourPalette().backgroundColour);
 
     g.setColour(getActiveColourPalette().borderColour);
@@ -41,6 +65,14 @@ void SynthModule::resized()
     // This method is where you should set the bounds of any child
     // components that your component contains..
 
+    if (m_canBeDisabled)
+    {
+        titleButton.setBounds(0, 0, 140, 35);
+    }
+    else
+    {
+        titleLabel.setBounds(0, 0, 140, 30);
+    }
 }
 
 void SynthModule::setColourPaletteFromMainHue()
@@ -57,4 +89,21 @@ void SynthModule::setColourPaletteFromColour(const juce::Colour& colour)
 {
     setMainHueFromColour(colour);
     setColourPaletteFromMainHue();
+}
+
+void SynthModule::updateBaseComponentColours()
+{
+    titleButton.setColour(juce::TextButton::ColourIds::buttonColourId, getActiveColourPalette().backgroundColour);
+    titleButton.setColour(juce::TextButton::ColourIds::textColourOffId, getActiveColourPalette().borderColour);
+    titleButton.setColour(juce::TextButton::ColourIds::buttonOnColourId, getActiveColourPalette().borderColour);
+    titleButton.setColour(juce::TextButton::ColourIds::textColourOnId, getActiveColourPalette().titleColour);
+
+    titleLabel.setColour(juce::Label::ColourIds::backgroundColourId, getActiveColourPalette().borderColour);
+    titleLabel.setColour(juce::Label::ColourIds::textColourId, getActiveColourPalette().titleColour);
+}
+
+void SynthModule::lookAndFeelChanged()
+{
+    updateBaseComponentColours();
+    updateDerivedComponentColours();
 }
