@@ -10,6 +10,8 @@
 
 #include <JuceHeader.h>
 #include "SynthModule.h"
+#include "Components/RadioButtonGroup.h"
+#include "Components/AdsrGraphComponent.h"
 
 //==============================================================================
 SynthModule::SynthModule(const juce::String& title, const juce::Colour& mainHue, bool canBeDisabled, juce::AudioProcessorValueTreeState& apvts, const juce::String& enableParameterID)
@@ -50,6 +52,47 @@ SynthModule::SynthModule(const juce::String& title, const juce::Colour& mainHue,
 
 SynthModule::~SynthModule()
 {
+}
+
+void SynthModule::setComponentColoursFromPalette(juce::Component& component)
+{
+    if (auto* c = dynamic_cast<juce::Slider*>(&component))
+    {
+        component.setColour(juce::Slider::ColourIds::rotarySliderFillColourId, getActiveColourPalette().borderColour);
+        component.setColour(juce::Slider::ColourIds::thumbColourId, getActiveColourPalette().sliderFillColour);
+        component.setColour(juce::Slider::ColourIds::rotarySliderOutlineColourId, getActiveColourPalette().deadColour);
+        component.setColour(juce::Slider::ColourIds::textBoxOutlineColourId, juce::Colour(0));
+        component.setColour(juce::Slider::ColourIds::textBoxTextColourId, getActiveColourPalette().labelColour);
+    }
+    else if (auto* c = dynamic_cast<juce::TextButton*>(&component))
+    {
+        component.setColour(juce::TextButton::ColourIds::buttonColourId, getActiveColourPalette().backgroundColour);
+        component.setColour(juce::TextButton::ColourIds::textColourOffId, getActiveColourPalette().borderColour);
+        component.setColour(juce::TextButton::ColourIds::buttonOnColourId, getActiveColourPalette().borderColour);
+        component.setColour(juce::TextButton::ColourIds::textColourOnId, getActiveColourPalette().titleColour);
+    }
+    else if (auto* c = dynamic_cast<juce::Label*>(&component)) // use this for parameter labels only
+    {
+        component.setColour (juce::Label::ColourIds::textColourId, getActiveColourPalette().labelColour);
+    }
+    else if (auto* c = dynamic_cast<RadioButtonGroup*>(&component))
+    {
+        c->setAndUpdateColours(
+            getActiveColourPalette().backgroundColour,
+            getActiveColourPalette().borderColour,
+            getActiveColourPalette().borderColour,
+            getActiveColourPalette().titleColour,
+            getActiveColourPalette().borderColour
+        );
+    }
+    else if (auto* c = dynamic_cast<AdsrGraphComponent*>(&component))
+    {
+        c->setBorderColour(getActiveColourPalette().borderColour);
+    }
+    else
+    {
+        jassert(false && "setComponentColoursFromPalette() is incompatible with this component type.");
+    }
 }
 
 void SynthModule::paint(juce::Graphics& g)
@@ -93,11 +136,9 @@ void SynthModule::setColourPaletteFromColour(const juce::Colour& colour)
 
 void SynthModule::updateBaseComponentColours()
 {
-    titleButton.setColour(juce::TextButton::ColourIds::buttonColourId, getActiveColourPalette().backgroundColour);
-    titleButton.setColour(juce::TextButton::ColourIds::textColourOffId, getActiveColourPalette().borderColour);
-    titleButton.setColour(juce::TextButton::ColourIds::buttonOnColourId, getActiveColourPalette().borderColour);
-    titleButton.setColour(juce::TextButton::ColourIds::textColourOnId, getActiveColourPalette().titleColour);
-
+    setComponentColoursFromPalette(titleButton);
+    
+    // titleLabel colour-setting is handled separately, since the "juce::Label" case in setComponentColoursFromPalette() is reserved for parameter labels
     titleLabel.setColour(juce::Label::ColourIds::backgroundColourId, getActiveColourPalette().borderColour);
     titleLabel.setColour(juce::Label::ColourIds::textColourId, getActiveColourPalette().titleColour);
 }
@@ -107,3 +148,4 @@ void SynthModule::lookAndFeelChanged()
     updateBaseComponentColours();
     updateDerivedComponentColours();
 }
+

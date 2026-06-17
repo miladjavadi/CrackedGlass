@@ -13,21 +13,13 @@
 
 //==============================================================================
 FilterComponent::FilterComponent(juce::AudioProcessorValueTreeState& apvts, const juce::String& filterTypeSelectorID)
-    : filterTypeSelector{ apvts, filterTypeSelectorID, juce::FlexBox::Direction::row, 1, 3, backgroundColour, borderColour, borderColour, titleColour, borderColour }
+    : SynthModule{ "Filter", juce::Colours::limegreen, true, apvts, "FILTERENABLE" }
+    , filterTypeSelector{ apvts, filterTypeSelectorID, juce::FlexBox::Direction::row, 1, 3, getActiveColourPalette().backgroundColour, getActiveColourPalette().borderColour, getActiveColourPalette().borderColour, getActiveColourPalette().titleColour, getActiveColourPalette().borderColour }
 {
     addAndMakeVisible(filterTypeSelector);
 
     setSliderWithLabel(cutoffFrequencySlider, cutoffFrequencyLabel, cutoffFrequencySliderAttachment, apvts, "CUTOFFFREQUENCY", false);
     setSliderWithLabel(resonanceSlider, resonanceLabel, resonanceSliderAttachment, apvts, "RESONANCE", false);
-
-    titleButton.setClickingTogglesState(true);
-    titleButton.setToggleState(false, juce::dontSendNotification);
-    titleButton.setColour(juce::TextButton::ColourIds::buttonColourId, backgroundColour);
-    titleButton.setColour(juce::TextButton::ColourIds::textColourOffId, borderColour);
-    titleButton.setColour(juce::TextButton::ColourIds::buttonOnColourId, borderColour);
-    titleButton.setColour(juce::TextButton::ColourIds::textColourOnId, titleColour);
-    titleButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(apvts, "FILTERENABLE", titleButton);
-    addAndMakeVisible(titleButton);
 }
 
 FilterComponent::~FilterComponent()
@@ -36,17 +28,13 @@ FilterComponent::~FilterComponent()
 
 void FilterComponent::paint (juce::Graphics& g)
 {
-
-    g.fillAll(backgroundColour);
-
-    g.setColour(borderColour);
-    g.drawRect(getLocalBounds(), 2);
+    SynthModule::paint(g);
 }
 
 void FilterComponent::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
+    SynthModule::resized();
+
     constexpr int padding{ 10 };
     constexpr int margin{ 10 };
     const juce::Rectangle<int> bounds{ getLocalBounds().reduced (margin) };
@@ -63,8 +51,6 @@ void FilterComponent::resized()
     resonanceLabel.setBounds (resonanceSlider.getX(), resonanceSlider.getY() - labelHeight, rotorSize, labelHeight);
 
     filterTypeSelector.setBounds (filterBounds.getX() + padding, resonanceLabel.getY() - labelHeight - 2 * padding - 5, filterBounds.getWidth() - 2 * padding, labelHeight + 5);
-
-    titleButton.setBounds(0, 0, 140, 35);
 }
 
 void FilterComponent::setSliderParams (juce::Slider& slider, bool useTextBox)
@@ -78,16 +64,14 @@ void FilterComponent::setSliderParams (juce::Slider& slider, bool useTextBox)
     {
         slider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     }
-    slider.setColour(juce::Slider::ColourIds::rotarySliderFillColourId, borderColour);
-    slider.setColour(juce::Slider::ColourIds::thumbColourId, sliderFillColour);
-    slider.setColour(juce::Slider::ColourIds::rotarySliderOutlineColourId, deadColour);
+    setComponentColoursFromPalette(slider);
 
     addAndMakeVisible (slider);
 }
 
 void FilterComponent::setLabelParams (juce::Label& label)
 {
-    label.setColour (juce::Label::ColourIds::textColourId, labelColour);
+    setComponentColoursFromPalette(label);
     label.setFont (18.0f);
     label.setJustificationType (juce::Justification::centred);
     label.setText(label.getText().toUpperCase(), juce::dontSendNotification);
@@ -99,4 +83,13 @@ void FilterComponent::setSliderWithLabel (juce::Slider& slider, juce::Label& lab
     setSliderParams(slider, useTextBox);
     attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, paramID, slider);
     setLabelParams(label);
+}
+
+void FilterComponent::updateDerivedComponentColours()
+{
+    setComponentColoursFromPalette(filterTypeSelector);
+    setComponentColoursFromPalette(cutoffFrequencySlider);
+    setComponentColoursFromPalette(resonanceSlider);
+    setComponentColoursFromPalette(cutoffFrequencyLabel);
+    setComponentColoursFromPalette(resonanceLabel);
 }

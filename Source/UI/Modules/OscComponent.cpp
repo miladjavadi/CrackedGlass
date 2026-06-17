@@ -13,19 +13,13 @@
 
 //==============================================================================
 OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, const juce::String& waveshapeSelectorID)
-    : waveshapeSelector{ apvts, waveshapeSelectorID, juce::FlexBox::Direction::row, 1, 4, backgroundColour, borderColour, borderColour, titleColour, borderColour }
+    : SynthModule{ "Oscillator", juce::Colours::cadetblue, false, apvts, "" }
+    , waveshapeSelector{ apvts, waveshapeSelectorID, juce::FlexBox::Direction::row, 1, 4, getActiveColourPalette().backgroundColour, getActiveColourPalette().borderColour, getActiveColourPalette().borderColour, getActiveColourPalette().titleColour, getActiveColourPalette().borderColour }
 {   
     setSliderWithLabel(coarsePitchSlider, coarsePitchLabel, coarsePitchSliderAttachment, apvts, "OSC1COARSEPITCH");
     setSliderWithLabel(finePitchSlider, finePitchLabel, finePitchSliderAttachment, apvts, "OSC1FINEPITCH");
     setSliderWithLabel(lfoFrequencySlider, fmFrequencyLabel, lfoFrequencySliderAttachment, apvts, "FMFREQUENCY");
     setSliderWithLabel(lfoDepthSlider, fmDepthLabel, lfoDepthSliderAttachment, apvts, "FMDEPTH");
-
-    titleLabel.setText(juce::String("Oscillator").toUpperCase(), juce::NotificationType::dontSendNotification);
-    titleLabel.setColour(juce::Label::ColourIds::backgroundColourId, borderColour);
-    titleLabel.setColour(juce::Label::ColourIds::textColourId, titleColour);
-    titleLabel.setFont(juce::Font(20.0f, 3));
-    titleLabel.setJustificationType(juce::Justification::centred);
-    addAndMakeVisible(titleLabel);
 
     addAndMakeVisible(waveshapeSelector);
 }
@@ -36,25 +30,13 @@ OscComponent::~OscComponent()
 
 void OscComponent::paint (juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
-    g.fillAll (backgroundColour);
-
-    g.setColour (borderColour);
-    g.drawRect (getLocalBounds(), 2);   // draw an outline around the component
-
-
+    SynthModule::paint(g);
 }
 
 void OscComponent::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
+    SynthModule::resized();
+
     constexpr int padding{ 10 };
     constexpr int margin{ 10 };
     const juce::Rectangle<int> bounds{ getLocalBounds().reduced (padding) };
@@ -81,26 +63,20 @@ void OscComponent::resized()
     selectorBounds.setY(coarsePitchLabel.getY() - labelHeight - padding - margin - 5);
     selectorBounds.setHeight(labelHeight + 5);
     waveshapeSelector.setBounds(selectorBounds);
-
-    titleLabel.setBounds(0, 0, 140, 30);
 }
 
 void OscComponent::setSliderParams (juce::Slider& slider)
 {
     slider.setSliderStyle (juce::Slider::SliderStyle::RotaryVerticalDrag);
     slider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, 40, 15);
-    slider.setColour (juce::Slider::ColourIds::textBoxTextColourId, labelColour);
-    slider.setColour (juce::Slider::ColourIds::textBoxOutlineColourId, borderColour.withAlpha(0.0f));
-    slider.setColour(juce::Slider::ColourIds::rotarySliderFillColourId, borderColour);
-    slider.setColour(juce::Slider::ColourIds::thumbColourId, sliderFillColour);
-    slider.setColour(juce::Slider::ColourIds::rotarySliderOutlineColourId, deadColour);
+    setComponentColoursFromPalette(slider);
 
     addAndMakeVisible (slider);
 }
 
 void OscComponent::setLabelParams (juce::Label& label)
 {
-    label.setColour (juce::Label::ColourIds::textColourId, labelColour);
+    setComponentColoursFromPalette(label);
     label.setFont (18.0f);
     label.setJustificationType (juce::Justification::centred);
     label.setText(label.getText().toUpperCase(), juce::dontSendNotification);

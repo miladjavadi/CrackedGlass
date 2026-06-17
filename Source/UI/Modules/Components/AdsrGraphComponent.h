@@ -23,6 +23,7 @@ public:
 
     void paint (juce::Graphics&) override;
     void resized() override;
+    void setBorderColour(const juce::Colour& newColour) { borderColour = newColour; }
 
 private:
     juce::Colour borderColour;

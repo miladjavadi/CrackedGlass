@@ -14,7 +14,7 @@
 //==============================================================================
 DistortionComponent::DistortionComponent(juce::AudioProcessorValueTreeState& apvts, const juce::String& enableParameterID, const juce::String& functionParameterID, const juce::String& driveParameterID, const juce::String& mixParameterID)
     : SynthModule{ "Distortion", juce::Colours::red, true, apvts, "DISTORTIONENABLE" }
-    , functionSelector{ apvts, functionParameterID, juce::FlexBox::Direction::row, 2, 2, backgroundColour, borderColour, borderColour, titleColour, borderColour }
+    , functionSelector{ apvts, functionParameterID, juce::FlexBox::Direction::row, 2, 2, getActiveColourPalette().backgroundColour, getActiveColourPalette().borderColour, getActiveColourPalette().borderColour, getActiveColourPalette().titleColour, getActiveColourPalette().borderColour }
 {
     addAndMakeVisible(functionSelector);
 
@@ -64,16 +64,14 @@ void DistortionComponent::setSliderParams (juce::Slider& slider, bool useTextBox
     {
         slider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
     }
-    slider.setColour(juce::Slider::ColourIds::rotarySliderFillColourId, borderColour);
-    slider.setColour(juce::Slider::ColourIds::thumbColourId, sliderFillColour);
-    slider.setColour(juce::Slider::ColourIds::rotarySliderOutlineColourId, deadColour);
+    setComponentColoursFromPalette(slider);
 
     addAndMakeVisible (slider);
 }
 
 void DistortionComponent::setLabelParams (juce::Label& label)
 {
-    label.setColour (juce::Label::ColourIds::textColourId, labelColour);
+    setComponentColoursFromPalette(label);
     label.setFont (18.0f);
     label.setJustificationType (juce::Justification::centred);
     label.setText(label.getText().toUpperCase(), juce::dontSendNotification);
@@ -89,5 +87,9 @@ void DistortionComponent::setSliderWithLabel (juce::Slider& slider, juce::Label&
 
 void DistortionComponent::updateDerivedComponentColours()
 {
-
+    setComponentColoursFromPalette(functionSelector);
+    setComponentColoursFromPalette(driveSlider);
+    setComponentColoursFromPalette(mixSlider);
+    setComponentColoursFromPalette(driveLabel);
+    setComponentColoursFromPalette(mixLabel);
 }

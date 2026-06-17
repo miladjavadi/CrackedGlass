@@ -11,12 +11,13 @@
 #pragma once
 
 #include "Components/RadioButtonGroup.h"
+#include "SynthModule.h"
 #include <JuceHeader.h>
 
 //==============================================================================
 /*
 */
-class OscComponent  : public juce::Component
+class OscComponent  : public SynthModule
 {
 public:
     OscComponent(juce::AudioProcessorValueTreeState& apvts, const juce::String& waveshapeSelectorID);
@@ -26,16 +27,6 @@ public:
     void resized() override;
 
 private:
-    juce::Colour mainColour{ juce::Colours::cadetblue };
-    juce::Colour backgroundColour = mainColour.withAlpha(0.15f);
-    juce::Colour labelColour = mainColour.withBrightness(1.0f).withSaturation(0.3f);
-    juce::Colour borderColour = mainColour.withBrightness(1.0f).withSaturation(0.6f);
-    juce::Colour titleColour = mainColour.withBrightness(0.1f);
-    juce::Colour sliderFillColour = mainColour.withBrightness(1.0f).withSaturation(0.2f);
-    juce::Colour deadColour = mainColour.withBrightness(0.5f).withSaturation(0.7f);
-
-    juce::Label titleLabel;
-
     juce::Slider coarsePitchSlider;
     juce::Slider finePitchSlider;
     juce::Slider lfoFrequencySlider;

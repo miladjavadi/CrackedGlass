@@ -27,15 +27,21 @@ public:
     void resized() override;
 
 protected:
-    virtual void updateDerivedComponentColours() = 0; // use this to update colours of additional child components in derived classes, see updateBaseComponentColours()
+    void setComponentColoursFromPalette(juce::Component& component);
+    const CrackedGlass::ModuleColourPalette& getActiveColourPalette()
+    {
+        return m_enabled ? m_colourPalette : m_greyscaleColourPalette;
+    }
+    virtual void updateDerivedComponentColours() {}; // use this to update colours of additional child components in derived classes, see updateBaseComponentColours()
 
 private:
     const CrackedGlass::ModuleColourPalette m_greyscaleColourPalette{
-    juce::Colour(0.0f, 0.0f, 0.7f, 0.15f),
+    juce::Colour(0.0f, 0.0f, 0.6f, 0.15f),
     juce::Colour(0.0f, 0.0f, 0.7f, 1.0f),
     juce::Colour(0.0f, 0.0f, 0.7f, 1.0f),
+    juce::Colour(0.0f, 0.0f, 0.07f, 1.0f),
     juce::Colour(0.0f, 0.0f, 0.7f, 1.0f),
-    juce::Colour(0.0f, 0.0f, 0.25f, 1.0f)
+    juce::Colour(0.0f, 0.0f, 0.35f, 1.0f)
     };
 
     juce::String m_title{};
@@ -60,7 +66,7 @@ private:
     //void setSliderParams(juce::Slider& slider, bool useTextBox = false);
     //void setLabelParams(juce::Label& label);
     //void setSliderWithLabel(juce::Slider& slider, juce::Label& label, std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& attachment, juce::AudioProcessorValueTreeState& apvts, const juce::String& paramID, bool useTextBox = true);
-    void performSliderArrayLayout();
+    void performSliderArrayLayout(); // not yet implemented
 
     void updateBaseComponentColours();
 
@@ -69,11 +75,6 @@ private:
     void setMainHueFromColour(const juce::Colour& colour)
     {
         m_mainHue = colour;
-    }
-
-    const CrackedGlass::ModuleColourPalette& getActiveColourPalette()
-    {
-        return m_enabled ? m_colourPalette : m_greyscaleColourPalette;
     }
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SynthModule)
