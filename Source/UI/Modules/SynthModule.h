@@ -20,20 +20,22 @@
 class SynthModule  : public juce::Component
 {
 public:
-    SynthModule();
+    SynthModule(const juce::String& title, const juce::Colour& mainHue, bool canBeDisabled, bool initialState);
     ~SynthModule() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
 
 private:
-    CrackedGlass::ModuleColourPalette m_greyscaleColourPalette{
+    const CrackedGlass::ModuleColourPalette m_greyscaleColourPalette{
     juce::Colour(0.0f, 0.0f, 0.9f, 0.15f),
     juce::Colour(0.0f, 0.0f, 0.9f, 1.0f),
     juce::Colour(0.0f, 0.0f, 0.9f, 1.0f),
     juce::Colour(0.0f, 0.0f, 0.9f, 1.0f),
     juce::Colour(0.0f, 0.0f, 0.5f, 1.0f)
     };
+
+    juce::String m_title{};
 
     juce::Colour m_mainHue{};
 
@@ -42,7 +44,16 @@ private:
     bool m_canBeDisabled{};
     bool m_enabled{};
 
-    void updateColoursFromMainHue();
+    // used when module cannot be disabled (i.e., when title button is not clickable)
+    juce::Label titleLabel;
+
+    // used when module can be disabled (i.e., when clicking the title button toggles module bypass)
+    juce::TextButton titleButton{};
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> titleButtonAttachment;
+
+    void setColourPaletteFromMainHue();
+    void setColourPaletteFromColour(const juce::Colour& colour);
+
     //void setSliderParams(juce::Slider& slider, bool useTextBox = false);
     //void setLabelParams(juce::Label& label);
     //void setSliderWithLabel(juce::Slider& slider, juce::Label& label, std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& attachment, juce::AudioProcessorValueTreeState& apvts, const juce::String& paramID, bool useTextBox = true);
