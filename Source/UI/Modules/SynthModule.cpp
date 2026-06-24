@@ -89,6 +89,11 @@ void SynthModule::setComponentColoursFromPalette(juce::Component& component)
     {
         c->setBorderColour(getActiveColourPalette().borderColour);
     }
+    else if (auto* c = dynamic_cast<LabeledRotarySlider*>(&component))
+    {
+        setComponentColoursFromPalette(c->slider);
+        setComponentColoursFromPalette(c->label);
+    }
     else
     {
         jassert(false && "setComponentColoursFromPalette() is incompatible with this component type.");
@@ -149,6 +154,27 @@ void SynthModule::setSliderWithLabel(juce::Slider& slider, juce::Label& label, s
     setSliderParams(slider, style, useTextBox);
     attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, paramID, slider);
     setLabelParams(label);
+}
+
+void SynthModule::layoutSliderArray(std::vector<std::unique_ptr<LabeledRotarySlider>>& sliders, juce::Rectangle<int> layoutBounds, int paddingBetweenSliders)
+{
+    juce::Grid sliderLayout;
+
+    using TrackInfo = juce::Grid::TrackInfo;
+    using Fr = juce::Grid::Fr;
+
+    sliderLayout.setGap(juce::Grid::Px(paddingBetweenSliders));
+
+    sliderLayout.templateRows = { TrackInfo(Fr(1)) };
+
+    for (size_t i{ 0 }; i < sliders.size(); ++i)
+    {
+        sliderLayout.templateColumns.add(TrackInfo(Fr(1)));
+
+        sliderLayout.items.add(juce::GridItem(*sliders[i]));
+    }
+
+    sliderLayout.performLayout(layoutBounds);
 }
 
 void SynthModule::setColourPaletteFromMainHue()

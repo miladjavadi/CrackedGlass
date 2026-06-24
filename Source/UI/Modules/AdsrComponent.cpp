@@ -19,12 +19,19 @@ AdsrComponent::AdsrComponent(const juce::String& name, juce::AudioProcessorValue
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
 
-    setSliderWithLabel(attackSlider, attackLabel, attackAttachment, apvts, attackParameterID, juce::Slider::SliderStyle::RotaryVerticalDrag, false);
-    setSliderWithLabel(decaySlider, decayLabel, decayAttachment, apvts, decayParameterID, juce::Slider::SliderStyle::RotaryVerticalDrag, false);
-    setSliderWithLabel(sustainSlider, sustainLabel, sustainAttachment, apvts, sustainParameterID, juce::Slider::SliderStyle::RotaryVerticalDrag, false);
-    setSliderWithLabel(releaseSlider, releaseLabel, releaseAttachment, apvts, releaseParameterID, juce::Slider::SliderStyle::RotaryVerticalDrag, false);
-
     addAndMakeVisible(adsrGraph);
+
+    parameterSliders.push_back(std::make_unique<LabeledRotarySlider>("Attack", apvts, attackParameterID));
+    parameterSliders.push_back(std::make_unique<LabeledRotarySlider>("Decay", apvts, decayParameterID));
+    parameterSliders.push_back(std::make_unique<LabeledRotarySlider>("Sustain", apvts, sustainParameterID));
+    parameterSliders.push_back(std::make_unique<LabeledRotarySlider>("Release", apvts, releaseParameterID));
+
+    setComponentColoursFromPalette(parameterSliders);
+
+    for (auto& slider : parameterSliders)
+    {
+        addAndMakeVisible(*slider);
+    }
 }
 
 AdsrComponent::~AdsrComponent()
@@ -42,39 +49,19 @@ void AdsrComponent::resized()
 
     constexpr int padding{ 10 };
     constexpr int margin{ 10 };
-    juce::Rectangle<int> bounds{ getLocalBounds().reduced (margin) };
-    bounds.reduce(30, 0);
-    const int rotorSize{ (bounds.getWidth() - 5 * padding) / 4 };
-    const int sliderStartX{ bounds.getX() + padding };
-    const int sliderStartY{ bounds.getBottom() - rotorSize };
-    constexpr int labelHeight{ 20 };
+    juce::Rectangle<int> bounds{ getLocalBounds().reduced(margin + 30, margin)};
+    constexpr int sliderLayoutHeight{ 110 };
+    const juce::Rectangle<int> sliderBounds{ bounds.getX(), bounds.getBottom() - sliderLayoutHeight, bounds.getWidth(), sliderLayoutHeight};
 
-    attackSlider.setBounds(sliderStartX, sliderStartY, rotorSize, rotorSize);
-    attackLabel.setBounds(attackSlider.getX(), attackSlider.getY() - labelHeight, rotorSize, labelHeight);
-
-    decaySlider.setBounds(attackSlider.getRight() + padding, sliderStartY, rotorSize, rotorSize);
-    decayLabel.setBounds(decaySlider.getX(), decaySlider.getY() - labelHeight, rotorSize, labelHeight);
-
-    sustainSlider.setBounds(decaySlider.getRight() + padding, sliderStartY, rotorSize, rotorSize);
-    sustainLabel.setBounds(sustainSlider.getX(), sustainSlider.getY() - labelHeight, rotorSize, labelHeight);
-
-    releaseSlider.setBounds(sustainSlider.getRight() + padding, sliderStartY, rotorSize, rotorSize);
-    releaseLabel.setBounds(releaseSlider.getX(), releaseSlider.getY() - labelHeight, rotorSize, labelHeight);
+    layoutSliderArray(parameterSliders, sliderBounds, padding);
 
     const int graphWidth{ bounds.getWidth() - 2 * padding };
     const int graphHeight{ 70 };
-    adsrGraph.setBounds(bounds.getX() + padding, attackLabel.getY() - graphHeight - padding, graphWidth, graphHeight);
+    adsrGraph.setBounds(bounds.getX() + padding, sliderBounds.getY() - graphHeight - padding, graphWidth, graphHeight);
 }
 
 void AdsrComponent::updateDerivedComponentColours()
 {
     setComponentColoursFromPalette(adsrGraph);
-    setComponentColoursFromPalette(attackSlider);
-    setComponentColoursFromPalette(decaySlider);
-    setComponentColoursFromPalette(sustainSlider);
-    setComponentColoursFromPalette(releaseSlider);
-    setComponentColoursFromPalette(attackLabel);
-    setComponentColoursFromPalette(decayLabel);
-    setComponentColoursFromPalette(sustainLabel);
-    setComponentColoursFromPalette(releaseLabel);
+    setComponentColoursFromPalette(parameterSliders);
 }

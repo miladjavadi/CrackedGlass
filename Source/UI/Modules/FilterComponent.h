@@ -11,6 +11,7 @@
 #pragma once
 
 #include "Components/RadioButtonGroup.h"
+#include "Components/LabeledRotarySlider.h"
 #include "SynthModule.h"
 #include <JuceHeader.h>
 
@@ -29,16 +30,7 @@ public:
 private:
     RadioButtonGroup filterTypeSelector;
 
-    juce::Slider cutoffFrequencySlider;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> cutoffFrequencySliderAttachment;
-    juce::Label cutoffFrequencyLabel{ "Cutoff", "Cutoff" };
-
-    juce::Slider resonanceSlider;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> resonanceSliderAttachment;
-    juce::Label resonanceLabel{ "Resonance", "Resonance" };
-
-    juce::TextButton titleButton{ "Filter", "Filter" };
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> titleButtonAttachment;
+    std::vector<std::unique_ptr<LabeledRotarySlider>> parameterSliders{};
 
     void updateDerivedComponentColours() override;
 

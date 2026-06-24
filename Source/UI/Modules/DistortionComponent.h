@@ -12,6 +12,7 @@
 
 #include "Components/RadioButtonGroup.h"
 #include "SynthModule.h"
+#include "Components/LabeledRotarySlider.h"
 #include <JuceHeader.h>
 
 //==============================================================================
@@ -27,23 +28,9 @@ public:
     void resized() override;
 
 private:
-    juce::Colour mainColour{ juce::Colours::red };
-    juce::Colour backgroundColour = mainColour.withAlpha(0.15f);
-    juce::Colour labelColour = mainColour.withBrightness(1.0f).withSaturation(0.3f);
-    juce::Colour borderColour = mainColour.withBrightness(1.0f).withSaturation(0.6f);
-    juce::Colour titleColour = mainColour.withBrightness(0.1f);
-    juce::Colour sliderFillColour = mainColour.withBrightness(1.0f).withSaturation(0.2f);
-    juce::Colour deadColour = mainColour.withBrightness(0.5f).withSaturation(0.7f);
-
     RadioButtonGroup functionSelector;
 
-    juce::Slider driveSlider;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> driveSliderAttachment;
-    juce::Label driveLabel{ "Drive", "Drive" };
-
-    juce::Slider mixSlider;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> mixSliderAttachment;
-    juce::Label mixLabel{ "Mix", "Mix" };
+    std::vector<std::unique_ptr<LabeledRotarySlider>> parameterSliders{};
 
     void updateDerivedComponentColours() override;
 

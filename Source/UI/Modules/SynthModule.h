@@ -11,6 +11,7 @@
 #pragma once
 
 #include "ModuleColourPalette.h"
+#include "Components/LabeledRotarySlider.h"
 
 #include <JuceHeader.h>
 
@@ -28,6 +29,16 @@ public:
 
 protected:
     void setComponentColoursFromPalette(juce::Component& component);
+
+    template <typename T>
+    void setComponentColoursFromPalette(std::vector<std::unique_ptr<T>>& components)
+    {
+        for (auto& c : components)
+        {
+            setComponentColoursFromPalette(*c);
+        }
+    }
+
     const CrackedGlass::ModuleColourPalette& getActiveColourPalette()
     {
         return m_enabled ? m_colourPalette : m_greyscaleColourPalette;
@@ -36,7 +47,7 @@ protected:
     void setSliderParams(juce::Slider& slider, juce::Slider::SliderStyle style = juce::Slider::SliderStyle::RotaryVerticalDrag, bool useTextBox = false);
     void setLabelParams(juce::Label& label);
     void setSliderWithLabel(juce::Slider& slider, juce::Label& label, std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& attachment, juce::AudioProcessorValueTreeState& apvts, const juce::String& paramID, const juce::Slider::SliderStyle style = juce::Slider::SliderStyle::RotaryVerticalDrag, bool useTextBox = false);
-    void performSliderArrayLayout(); // not yet implemented
+    void layoutSliderArray(std::vector<std::unique_ptr<LabeledRotarySlider>>& sliders, juce::Rectangle<int> layoutBounds, int paddingBetweenSliders = 10);
 
     virtual void updateDerivedComponentColours() {}; // use this to update colours of additional child components in derived classes, see updateBaseComponentColours()
 

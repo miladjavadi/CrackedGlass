@@ -14,6 +14,7 @@
 #include <JuceHeader.h>
 #include "Components/RadioButton.h"
 #include "SynthModule.h"
+#include "Components/LabeledRotarySlider.h"
 
 //==============================================================================
 /*
@@ -30,20 +31,7 @@ public:
 private:
     AdsrGraphComponent adsrGraph;
 
-    juce::Slider attackSlider;
-    juce::Slider decaySlider;
-    juce::Slider sustainSlider;
-    juce::Slider releaseSlider;
-
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> attackAttachment;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> decayAttachment;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> sustainAttachment;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> releaseAttachment;
-
-    juce::Label attackLabel{ "Attack", "Attack" };
-    juce::Label decayLabel{ "Decay", "Decay" };
-    juce::Label sustainLabel{ "Sustain", "Sustain" };
-    juce::Label releaseLabel{ "Release", "Release" };
+    std::vector<std::unique_ptr<LabeledRotarySlider>> parameterSliders{};
 
     void updateDerivedComponentColours() override;
 

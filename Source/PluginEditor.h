@@ -17,6 +17,7 @@
 #include "UI/Modules/DistortionComponent.h"
 #include "UI/Modules/SynthModule.h"
 #include "UI/Appearance/CrackedGlassLookAndFeel.h"
+#include "UI/Modules/Components/LabeledRotarySlider.h"
 
 //==============================================================================
 /**

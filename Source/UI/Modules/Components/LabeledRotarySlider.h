@@ -26,20 +26,32 @@ public:
         boxTextColourId,
     };
 
-    LabeledRotarySlider();
+    juce::Slider slider;
+    juce::Label label;
+    int m_padding{}; // distance between label and slider
+
+    LabeledRotarySlider(const juce::String& labelText, juce::AudioProcessorValueTreeState& apvts, const juce::String& parameterID, bool useTextBox = false);
     ~LabeledRotarySlider() override;
 
-    bool hasTextBox{ false };
+    bool hasTextBox{};
 
-    void setColour(ColourIds colourId, juce::Colour colour);
-    void setPadding(int padding);
+    void setColour(ColourIds colourId, const juce::Colour& colour);
+
+    void setPadding(int padding)
+    {
+        m_padding = padding;
+    }
+
+    int getPadding()
+    {
+        return m_padding;
+    }
+
     void paint (juce::Graphics&) override;
     void resized() override;
 
 private:
-    juce::Slider slider{};
-    juce::Label label{};
-    int padding{};
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> attachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (LabeledRotarySlider)
 };

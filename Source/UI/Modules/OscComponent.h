@@ -11,6 +11,7 @@
 #pragma once
 
 #include "Components/RadioButtonGroup.h"
+#include "Components/LabeledRotarySlider.h"
 #include "SynthModule.h"
 #include <JuceHeader.h>
 
@@ -27,24 +28,9 @@ public:
     void resized() override;
 
 private:
-    juce::Slider coarsePitchSlider;
-    juce::Slider finePitchSlider;
-    juce::Slider lfoFrequencySlider;
-    juce::Slider lfoDepthSlider;
-
     RadioButtonGroup waveshapeSelector;
 
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> coarsePitchSliderAttachment;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> finePitchSliderAttachment;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> lfoFrequencySliderAttachment;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> lfoDepthSliderAttachment;
-
-    juce::Label coarsePitchLabel{ "Coarse", "Coarse" };
-    juce::Label finePitchLabel{ "Fine", "Fine" };
-    juce::Label fmFrequencyLabel{ "FM Frequency", "FM Frequency" };
-    juce::Label fmDepthLabel{ "FM Depth", "FM Depth" };
-
-    juce::Label waveshapeLabel{ "Shape", "Shape" };
+    std::vector<std::unique_ptr<LabeledRotarySlider>> parameterSliders{};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OscComponent)
 };

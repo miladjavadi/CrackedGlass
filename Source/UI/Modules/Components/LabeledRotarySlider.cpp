@@ -12,40 +12,65 @@
 #include "LabeledRotarySlider.h"
 
 //==============================================================================
-LabeledRotarySlider::LabeledRotarySlider()
+LabeledRotarySlider::LabeledRotarySlider(const juce::String& labelText, juce::AudioProcessorValueTreeState& apvts, const juce::String& parameterID, bool useTextBox)
+    : hasTextBox{ useTextBox }
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
+    slider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
 
+    if (useTextBox)
+    {
+        slider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 40, 20);
+    }
+    else
+    {
+        slider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    }
+
+    addAndMakeVisible (slider);
+
+    label.setFont(18.0f);
+    label.setJustificationType(juce::Justification::centred);
+    label.setText(labelText.toUpperCase(), juce::dontSendNotification);
+    addAndMakeVisible(label);
+
+    attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, parameterID, slider);
 }
 
 LabeledRotarySlider::~LabeledRotarySlider()
 {
 }
 
+void LabeledRotarySlider::setColour(ColourIds colourId, const juce::Colour& colour)
+{
+    switch (colourId)
+    {
+    case sliderFillColourId:
+        slider.setColour(juce::Slider::ColourIds::rotarySliderFillColourId, colour);
+        break;
+    case sliderOutlineColourId:
+        slider.setColour(juce::Slider::ColourIds::rotarySliderOutlineColourId, colour);
+        break;
+    case labelColourId:
+        label.setColour(juce::Label::ColourIds::textColourId, colour);
+        break;
+    case boxTextColourId:
+        label.setColour(juce::Label::ColourIds::outlineColourId, colour);
+        break;
+    default:
+        jassert(false && "ColourId not found.");
+    }
+}
+
 void LabeledRotarySlider::paint (juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
-
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (juce::Colours::white);
-    g.setFont (juce::FontOptions (14.0f));
-    g.drawText ("LabeledRotarySlider", getLocalBounds(),
-                juce::Justification::centred, true);   // draw some placeholder text
 }
 
 void LabeledRotarySlider::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
+    juce::Rectangle<int> bounds{ getLocalBounds()};
+    constexpr int labelHeight{ 20 };
+    int rotorSize{ std::min(bounds.getWidth(), bounds.getHeight() - labelHeight - m_padding) };
 
+    slider.setBounds(bounds.getX(), bounds.getY() + labelHeight + m_padding, rotorSize, rotorSize);
+    label.setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), labelHeight);
 }

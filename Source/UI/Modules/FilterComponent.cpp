@@ -18,8 +18,15 @@ FilterComponent::FilterComponent(juce::AudioProcessorValueTreeState& apvts, cons
 {
     addAndMakeVisible(filterTypeSelector);
 
-    setSliderWithLabel(cutoffFrequencySlider, cutoffFrequencyLabel, cutoffFrequencySliderAttachment, apvts, "CUTOFFFREQUENCY", juce::Slider::SliderStyle::RotaryVerticalDrag, false);
-    setSliderWithLabel(resonanceSlider, resonanceLabel, resonanceSliderAttachment, apvts, "RESONANCE", juce::Slider::SliderStyle::RotaryVerticalDrag, false);
+    parameterSliders.push_back(std::make_unique<LabeledRotarySlider>("Cutoff", apvts, "CUTOFFFREQUENCY"));
+    parameterSliders.push_back(std::make_unique<LabeledRotarySlider>("Resonance", apvts, "RESONANCE"));
+
+    setComponentColoursFromPalette(parameterSliders);
+
+    for (auto& slider : parameterSliders)
+    {
+        addAndMakeVisible(*slider);
+    }
 }
 
 FilterComponent::~FilterComponent()
@@ -37,27 +44,20 @@ void FilterComponent::resized()
 
     constexpr int padding{ 10 };
     constexpr int margin{ 10 };
+
+    constexpr int sliderLayoutHeight{ 120 };
     const juce::Rectangle<int> bounds{ getLocalBounds().reduced (margin) };
-    const juce::Rectangle<int> filterBounds{ bounds.reduced(0, 0) };
+    const juce::Rectangle<int> sliderBounds{ padding + margin, bounds.getBottom() - sliderLayoutHeight, bounds.getWidth() - 2 * margin, sliderLayoutHeight};
 
-    const int rotorSize{ (filterBounds.getWidth() - 3 * padding) / 2 };
     constexpr int labelHeight{ 20 };
-    const int sliderStartY{ bounds.getBottom() - rotorSize - margin };
 
-    cutoffFrequencySlider.setBounds (filterBounds.getX() + padding, sliderStartY, rotorSize, rotorSize);
-    cutoffFrequencyLabel.setBounds (cutoffFrequencySlider.getX(), cutoffFrequencySlider.getY() - labelHeight, rotorSize, labelHeight);
+    layoutSliderArray(parameterSliders, sliderBounds, padding);
 
-    resonanceSlider.setBounds (cutoffFrequencySlider.getRight() + padding, cutoffFrequencySlider.getY(), rotorSize, rotorSize);
-    resonanceLabel.setBounds (resonanceSlider.getX(), resonanceSlider.getY() - labelHeight, rotorSize, labelHeight);
-
-    filterTypeSelector.setBounds (filterBounds.getX() + padding, resonanceLabel.getY() - labelHeight - 2 * padding - 5, filterBounds.getWidth() - 2 * padding, labelHeight + 5);
+    filterTypeSelector.setBounds (sliderBounds.getX() + padding, sliderBounds.getY() - labelHeight - 2 * padding - 5, sliderBounds.getWidth() - 2 * padding, labelHeight + 5);
 }
 
 void FilterComponent::updateDerivedComponentColours()
 {
     setComponentColoursFromPalette(filterTypeSelector);
-    setComponentColoursFromPalette(cutoffFrequencySlider);
-    setComponentColoursFromPalette(resonanceSlider);
-    setComponentColoursFromPalette(cutoffFrequencyLabel);
-    setComponentColoursFromPalette(resonanceLabel);
+    setComponentColoursFromPalette(parameterSliders);
 }
