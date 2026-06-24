@@ -46,9 +46,5 @@ private:
 
     juce::Label waveshapeLabel{ "Shape", "Shape" };
 
-    void setSliderParams(juce::Slider& slider);
-    void setLabelParams(juce::Label& label);
-    void setSliderWithLabel (juce::Slider& slider, juce::Label& label, std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& attachment, juce::AudioProcessorValueTreeState& apvts, juce::String paramID);
-
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OscComponent)
 };

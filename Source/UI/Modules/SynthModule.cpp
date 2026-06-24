@@ -118,6 +118,39 @@ void SynthModule::resized()
     }
 }
 
+void SynthModule::setSliderParams(juce::Slider& slider, juce::Slider::SliderStyle style, bool useTextBox)
+{
+    slider.setSliderStyle(style);
+
+    if (useTextBox)
+    {
+        slider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 40, 20);
+    }
+    else
+    {
+        slider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    }
+
+    setComponentColoursFromPalette(slider);
+    addAndMakeVisible (slider);
+}
+
+void SynthModule::setLabelParams (juce::Label& label)
+{
+    setComponentColoursFromPalette(label);
+    label.setFont(18.0f);
+    label.setJustificationType(juce::Justification::centred);
+    label.setText(label.getText().toUpperCase(), juce::dontSendNotification);
+    addAndMakeVisible(label);
+}
+
+void SynthModule::setSliderWithLabel(juce::Slider& slider, juce::Label& label, std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& attachment, juce::AudioProcessorValueTreeState& apvts, const juce::String& paramID, const juce::Slider::SliderStyle style, bool useTextBox)
+{
+    setSliderParams(slider, style, useTextBox);
+    attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, paramID, slider);
+    setLabelParams(label);
+}
+
 void SynthModule::setColourPaletteFromMainHue()
 {
     m_colourPalette.backgroundColour = m_mainHue.withAlpha(0.15f).withBrightness(0.9f).withSaturation(0.9f);

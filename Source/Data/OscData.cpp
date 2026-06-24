@@ -34,7 +34,7 @@ void OscData::setWaveshape(Waveshape selection)
     case Waveshape::whiteNoise:
         initialise([this](float) { return whiteRNG.nextFloat() - 0.5f; });
     default:
-        jassert(false && "no bitches");
+        jassert(false && "Selected waveshape does not exist.");
     }
 }
 

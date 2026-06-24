@@ -16,10 +16,10 @@ OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, const juce
     : SynthModule{ "Oscillator", juce::Colours::cadetblue, false, apvts, "" }
     , waveshapeSelector{ apvts, waveshapeSelectorID, juce::FlexBox::Direction::row, 1, 4, getActiveColourPalette().backgroundColour, getActiveColourPalette().borderColour, getActiveColourPalette().borderColour, getActiveColourPalette().titleColour, getActiveColourPalette().borderColour }
 {   
-    setSliderWithLabel(coarsePitchSlider, coarsePitchLabel, coarsePitchSliderAttachment, apvts, "OSC1COARSEPITCH");
-    setSliderWithLabel(finePitchSlider, finePitchLabel, finePitchSliderAttachment, apvts, "OSC1FINEPITCH");
-    setSliderWithLabel(lfoFrequencySlider, fmFrequencyLabel, lfoFrequencySliderAttachment, apvts, "FMFREQUENCY");
-    setSliderWithLabel(lfoDepthSlider, fmDepthLabel, lfoDepthSliderAttachment, apvts, "FMDEPTH");
+    setSliderWithLabel(coarsePitchSlider, coarsePitchLabel, coarsePitchSliderAttachment, apvts, "OSC1COARSEPITCH", juce::Slider::SliderStyle::RotaryVerticalDrag, true);
+    setSliderWithLabel(finePitchSlider, finePitchLabel, finePitchSliderAttachment, apvts, "OSC1FINEPITCH", juce::Slider::SliderStyle::RotaryVerticalDrag, true);
+    setSliderWithLabel(lfoFrequencySlider, fmFrequencyLabel, lfoFrequencySliderAttachment, apvts, "FMFREQUENCY", juce::Slider::SliderStyle::RotaryVerticalDrag, true);
+    setSliderWithLabel(lfoDepthSlider, fmDepthLabel, lfoDepthSliderAttachment, apvts, "FMDEPTH", juce::Slider::SliderStyle::RotaryVerticalDrag, true);
 
     addAndMakeVisible(waveshapeSelector);
 }
@@ -63,29 +63,4 @@ void OscComponent::resized()
     selectorBounds.setY(coarsePitchLabel.getY() - labelHeight - padding - margin - 5);
     selectorBounds.setHeight(labelHeight + 5);
     waveshapeSelector.setBounds(selectorBounds);
-}
-
-void OscComponent::setSliderParams (juce::Slider& slider)
-{
-    slider.setSliderStyle (juce::Slider::SliderStyle::RotaryVerticalDrag);
-    slider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, 40, 15);
-    setComponentColoursFromPalette(slider);
-
-    addAndMakeVisible (slider);
-}
-
-void OscComponent::setLabelParams (juce::Label& label)
-{
-    setComponentColoursFromPalette(label);
-    label.setFont (18.0f);
-    label.setJustificationType (juce::Justification::centred);
-    label.setText(label.getText().toUpperCase(), juce::dontSendNotification);
-    addAndMakeVisible(label);
-}
-
-void OscComponent::setSliderWithLabel (juce::Slider& slider, juce::Label& label, std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& attachment, juce::AudioProcessorValueTreeState& apvts, juce::String paramID)
-{
-    setSliderParams(slider);
-    attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, paramID, slider);
-    setLabelParams(label);
 }

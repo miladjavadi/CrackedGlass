@@ -18,8 +18,8 @@ FilterComponent::FilterComponent(juce::AudioProcessorValueTreeState& apvts, cons
 {
     addAndMakeVisible(filterTypeSelector);
 
-    setSliderWithLabel(cutoffFrequencySlider, cutoffFrequencyLabel, cutoffFrequencySliderAttachment, apvts, "CUTOFFFREQUENCY", false);
-    setSliderWithLabel(resonanceSlider, resonanceLabel, resonanceSliderAttachment, apvts, "RESONANCE", false);
+    setSliderWithLabel(cutoffFrequencySlider, cutoffFrequencyLabel, cutoffFrequencySliderAttachment, apvts, "CUTOFFFREQUENCY", juce::Slider::SliderStyle::RotaryVerticalDrag, false);
+    setSliderWithLabel(resonanceSlider, resonanceLabel, resonanceSliderAttachment, apvts, "RESONANCE", juce::Slider::SliderStyle::RotaryVerticalDrag, false);
 }
 
 FilterComponent::~FilterComponent()
@@ -51,38 +51,6 @@ void FilterComponent::resized()
     resonanceLabel.setBounds (resonanceSlider.getX(), resonanceSlider.getY() - labelHeight, rotorSize, labelHeight);
 
     filterTypeSelector.setBounds (filterBounds.getX() + padding, resonanceLabel.getY() - labelHeight - 2 * padding - 5, filterBounds.getWidth() - 2 * padding, labelHeight + 5);
-}
-
-void FilterComponent::setSliderParams (juce::Slider& slider, bool useTextBox)
-{
-    slider.setSliderStyle (juce::Slider::SliderStyle::RotaryVerticalDrag);
-    if (useTextBox)
-    {
-        slider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, 40, 20);
-    }
-    else
-    {
-        slider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    }
-    setComponentColoursFromPalette(slider);
-
-    addAndMakeVisible (slider);
-}
-
-void FilterComponent::setLabelParams (juce::Label& label)
-{
-    setComponentColoursFromPalette(label);
-    label.setFont (18.0f);
-    label.setJustificationType (juce::Justification::centred);
-    label.setText(label.getText().toUpperCase(), juce::dontSendNotification);
-    addAndMakeVisible(label);
-}
-
-void FilterComponent::setSliderWithLabel (juce::Slider& slider, juce::Label& label, std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& attachment, juce::AudioProcessorValueTreeState& apvts, juce::String paramID, bool useTextBox)
-{
-    setSliderParams(slider, useTextBox);
-    attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, paramID, slider);
-    setLabelParams(label);
 }
 
 void FilterComponent::updateDerivedComponentColours()

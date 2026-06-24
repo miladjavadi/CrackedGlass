@@ -19,10 +19,10 @@ AdsrComponent::AdsrComponent(const juce::String& name, juce::AudioProcessorValue
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
 
-    setSliderWithLabel(attackSlider, attackLabel, attackAttachment, apvts, attackParameterID, false);
-    setSliderWithLabel(decaySlider, decayLabel, decayAttachment, apvts, decayParameterID, false);
-    setSliderWithLabel(sustainSlider, sustainLabel, sustainAttachment, apvts, sustainParameterID, false);
-    setSliderWithLabel(releaseSlider, releaseLabel, releaseAttachment, apvts, releaseParameterID, false);
+    setSliderWithLabel(attackSlider, attackLabel, attackAttachment, apvts, attackParameterID, juce::Slider::SliderStyle::RotaryVerticalDrag, false);
+    setSliderWithLabel(decaySlider, decayLabel, decayAttachment, apvts, decayParameterID, juce::Slider::SliderStyle::RotaryVerticalDrag, false);
+    setSliderWithLabel(sustainSlider, sustainLabel, sustainAttachment, apvts, sustainParameterID, juce::Slider::SliderStyle::RotaryVerticalDrag, false);
+    setSliderWithLabel(releaseSlider, releaseLabel, releaseAttachment, apvts, releaseParameterID, juce::Slider::SliderStyle::RotaryVerticalDrag, false);
 
     addAndMakeVisible(adsrGraph);
 }
@@ -64,38 +64,6 @@ void AdsrComponent::resized()
     const int graphWidth{ bounds.getWidth() - 2 * padding };
     const int graphHeight{ 70 };
     adsrGraph.setBounds(bounds.getX() + padding, attackLabel.getY() - graphHeight - padding, graphWidth, graphHeight);
-}
-
-void AdsrComponent::setSliderParams(juce::Slider& slider, bool useTextBox)
-{
-    slider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    if (useTextBox)
-    {
-        slider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 40, 20);
-    }
-    else
-    {
-        slider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    }
-    setComponentColoursFromPalette(slider);
-
-    addAndMakeVisible (slider);
-}
-
-void AdsrComponent::setLabelParams (juce::Label& label)
-{
-    setComponentColoursFromPalette(label);
-    label.setFont(18.0f);
-    label.setJustificationType(juce::Justification::centred);
-    label.setText(label.getText().toUpperCase(), juce::dontSendNotification);
-    addAndMakeVisible(label);
-}
-
-void AdsrComponent::setSliderWithLabel(juce::Slider& slider, juce::Label& label, std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& attachment, juce::AudioProcessorValueTreeState& apvts, juce::String paramID, bool useTextBox)
-{
-    setSliderParams(slider, useTextBox);
-    attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, paramID, slider);
-    setLabelParams(label);
 }
 
 void AdsrComponent::updateDerivedComponentColours()

@@ -45,13 +45,6 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> mixSliderAttachment;
     juce::Label mixLabel{ "Mix", "Mix" };
 
-    //juce::TextButton titleButton{ "Distortion", "Distortion" };
-    //std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> titleButtonAttachment;
-
-    void setSliderParams(juce::Slider& slider, bool useTextBox = true);
-    void setLabelParams(juce::Label& label);
-    void setSliderWithLabel(juce::Slider& slider, juce::Label& label, std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& attachment, juce::AudioProcessorValueTreeState& apvts, juce::String paramID, bool useTextBox = true);
-
     void updateDerivedComponentColours() override;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DistortionComponent)

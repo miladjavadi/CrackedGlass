@@ -32,6 +32,12 @@ protected:
     {
         return m_enabled ? m_colourPalette : m_greyscaleColourPalette;
     }
+
+    void setSliderParams(juce::Slider& slider, juce::Slider::SliderStyle style = juce::Slider::SliderStyle::RotaryVerticalDrag, bool useTextBox = false);
+    void setLabelParams(juce::Label& label);
+    void setSliderWithLabel(juce::Slider& slider, juce::Label& label, std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& attachment, juce::AudioProcessorValueTreeState& apvts, const juce::String& paramID, const juce::Slider::SliderStyle style = juce::Slider::SliderStyle::RotaryVerticalDrag, bool useTextBox = false);
+    void performSliderArrayLayout(); // not yet implemented
+
     virtual void updateDerivedComponentColours() {}; // use this to update colours of additional child components in derived classes, see updateBaseComponentColours()
 
 private:
@@ -62,11 +68,6 @@ private:
 
     void setColourPaletteFromMainHue();
     void setColourPaletteFromColour(const juce::Colour& colour);
-
-    //void setSliderParams(juce::Slider& slider, bool useTextBox = false);
-    //void setLabelParams(juce::Label& label);
-    //void setSliderWithLabel(juce::Slider& slider, juce::Label& label, std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& attachment, juce::AudioProcessorValueTreeState& apvts, const juce::String& paramID, bool useTextBox = true);
-    void performSliderArrayLayout(); // not yet implemented
 
     void updateBaseComponentColours();
 

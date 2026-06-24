@@ -45,10 +45,6 @@ private:
     juce::Label sustainLabel{ "Sustain", "Sustain" };
     juce::Label releaseLabel{ "Release", "Release" };
 
-    void setSliderParams(juce::Slider& slider, bool useTextBox = true);
-    void setLabelParams(juce::Label& label);
-    void setSliderWithLabel(juce::Slider& slider, juce::Label& label, std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& attachment, juce::AudioProcessorValueTreeState& apvts, juce::String paramID, bool useTextBox = true);
-    
     void updateDerivedComponentColours() override;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AdsrComponent)

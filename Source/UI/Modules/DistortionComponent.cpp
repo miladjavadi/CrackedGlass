@@ -18,8 +18,8 @@ DistortionComponent::DistortionComponent(juce::AudioProcessorValueTreeState& apv
 {
     addAndMakeVisible(functionSelector);
 
-    setSliderWithLabel(driveSlider, driveLabel, driveSliderAttachment, apvts, driveParameterID, false);
-    setSliderWithLabel(mixSlider, mixLabel, mixSliderAttachment, apvts, mixParameterID, false);
+    setSliderWithLabel(driveSlider, driveLabel, driveSliderAttachment, apvts, driveParameterID, juce::Slider::SliderStyle::RotaryVerticalDrag, false);
+    setSliderWithLabel(mixSlider, mixLabel, mixSliderAttachment, apvts, mixParameterID, juce::Slider::SliderStyle::RotaryVerticalDrag, false);
 }
 
 DistortionComponent::~DistortionComponent()
@@ -51,38 +51,6 @@ void DistortionComponent::resized()
     mixLabel.setBounds (mixSlider.getX(), mixSlider.getY() - labelHeight, rotorSize, labelHeight);
 
     functionSelector.setBounds (sliderBounds.getX() + padding + margin, driveLabel.getY() - 2 * labelHeight - padding - margin - 10, sliderBounds.getWidth() - 2 * (padding + margin), 2 * labelHeight + 10);
-}
-
-void DistortionComponent::setSliderParams (juce::Slider& slider, bool useTextBox)
-{
-    slider.setSliderStyle (juce::Slider::SliderStyle::RotaryVerticalDrag);
-    if (useTextBox)
-    {
-        slider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, 40, 20);
-    }
-    else
-    {
-        slider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    }
-    setComponentColoursFromPalette(slider);
-
-    addAndMakeVisible (slider);
-}
-
-void DistortionComponent::setLabelParams (juce::Label& label)
-{
-    setComponentColoursFromPalette(label);
-    label.setFont (18.0f);
-    label.setJustificationType (juce::Justification::centred);
-    label.setText(label.getText().toUpperCase(), juce::dontSendNotification);
-    addAndMakeVisible(label);
-}
-
-void DistortionComponent::setSliderWithLabel (juce::Slider& slider, juce::Label& label, std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& attachment, juce::AudioProcessorValueTreeState& apvts, juce::String paramID, bool useTextBox)
-{
-    setSliderParams(slider, useTextBox);
-    attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, paramID, slider);
-    setLabelParams(label);
 }
 
 void DistortionComponent::updateDerivedComponentColours()
