@@ -18,7 +18,7 @@ AdsrGraphComponent::AdsrGraphComponent(juce::AudioProcessorValueTreeState& apvts
     , m_decayParameterID{ decayParameterID }
     , m_sustainParameterID{ sustainParameterID }
     , m_releaseParameterID{ releaseParameterID }
-    , borderColour{ mainColour.withBrightness(1.0f).withSaturation(0.6f) }
+    , borderColour{ mainColour }
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.

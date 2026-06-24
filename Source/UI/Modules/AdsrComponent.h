@@ -13,11 +13,12 @@
 #include "Components/AdsrGraphComponent.h"
 #include <JuceHeader.h>
 #include "Components/RadioButton.h"
+#include "SynthModule.h"
 
 //==============================================================================
 /*
 */
-class AdsrComponent  : public juce::Component
+class AdsrComponent : public SynthModule
 {
 public:
     AdsrComponent(const juce::String& name, juce::AudioProcessorValueTreeState& apvts, const juce::String& attackParameterID, const juce::String& decayParameterID, const juce::String& sustainParameterId, const juce::String& releaseParameterId, juce::Colour mainColour = juce::Colours::orange, bool canBeDisabled = false, const juce::String& enableParameterID = "");
@@ -27,24 +28,7 @@ public:
     void resized() override;
 
 private:
-    bool m_canBeDisabled;
-    juce::String m_name;
-
-    juce::Colour m_mainColour;
-
-    juce::Colour backgroundColour;
-    juce::Colour labelColour;
-    juce::Colour borderColour;
-    juce::Colour titleColour;
-    juce::Colour sliderFillColour;
-    juce::Colour deadColour;
-
     AdsrGraphComponent adsrGraph;
-
-    juce::Label titleLabel;
-
-    juce::TextButton titleButton{ "Filter", "Filter" };
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> titleButtonAttachment;
 
     juce::Slider attackSlider;
     juce::Slider decaySlider;
@@ -64,6 +48,8 @@ private:
     void setSliderParams(juce::Slider& slider, bool useTextBox = true);
     void setLabelParams(juce::Label& label);
     void setSliderWithLabel(juce::Slider& slider, juce::Label& label, std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>& attachment, juce::AudioProcessorValueTreeState& apvts, juce::String paramID, bool useTextBox = true);
+    
+    void updateDerivedComponentColours() override;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AdsrComponent)
 };
